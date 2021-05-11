@@ -1,7 +1,14 @@
-#[cfg(test)]
-mod tests {
-  #[test]
-  fn it_works() {
-    assert_eq!(2 + 2, 4);
-  }
+#[macro_export]
+macro_rules! map {
+  {$($k: expr => $v: expr),* $(,)?} => {
+    {
+      let mut map = std::collections::HashMap::new();
+
+      $(
+        map.insert($k, $v);
+      )*
+
+      map
+    }
+  };
 }
