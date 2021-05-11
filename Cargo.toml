@@ -1,8 +1,13 @@
 [package]
-name = "map_macro"
+name = "map-macro"
 version = "0.1.0"
 authors = ["jofas <jonas@fc-web.de>"]
 edition = "2018"
+license = "MIT"
+readme = "README.rst"
+description = "declarative macro map! for statically initializing a HashMap (like the vec! macro for Vector)"
+homepage = "https://github.com/jofas/map_macro"
+repository = "https://github.com/jofas/map_macro"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
