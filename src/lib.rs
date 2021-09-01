@@ -12,3 +12,18 @@ macro_rules! map {
     }
   };
 }
+
+#[macro_export]
+macro_rules! set {
+  {$($v: expr),* $(,)?} => {
+    {
+      let mut set = std::collections::HashSet::new();
+
+      $(
+        set.insert($v);
+      )*
+
+      set
+    }
+  };
+}
