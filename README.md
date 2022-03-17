@@ -13,6 +13,8 @@ The `map!` macro allows for statically initializing a
 `std::collections::HashMap`.
 The same goes for the `set!` macro only for 
 `std::collections::HashSet`.
+The macros are equivalent to the `vec!` macro offered by the rust
+standard library for initializing `Vec` instances.
 
 This crate has zero dependencies.
 
