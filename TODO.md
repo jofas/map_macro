@@ -6,6 +6,6 @@
 
 * [x] build action 
 
-* [ ] badges
+* [x] badges
 
 * [ ] clippy action
