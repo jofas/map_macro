@@ -6,7 +6,7 @@ edition = "2018"
 license = "MIT"
 readme = "README.md"
 description = "Declarative map! and set! macros for statically initializing a HashMap or HashSet (like the vec! macro for Vec)"
-keyword = ["macro", "HashMap", "HashSet", "map", "set"]
+keywords = ["macro", "HashMap", "HashSet", "map", "set"]
 homepage = "https://github.com/jofas/map_macro"
 repository = "https://github.com/jofas/map_macro"
 
