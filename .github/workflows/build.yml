@@ -1,6 +1,21 @@
 name: Build
 on: [push]
 jobs:
+  Cleanup:
+    runs-on: ubuntu-latest
+    container:
+      image: rust:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: fmt
+        run: cargo fmt
+      - name: clippy fix
+        run: cargo clippy --all-features --all-targets --fix
+      - name: apply cleanup
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'applying code formatting and lint fixes'
   Build:
     runs-on: ubuntu-latest
     container:
