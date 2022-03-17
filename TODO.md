@@ -9,3 +9,5 @@
 * [x] badges
 
 * [ ] clippy action
+
+* [ ] publish `v0.2.1`
