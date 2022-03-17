@@ -8,11 +8,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: fmt
+      - name: Add cargo features
+        run: rustup component add rustfmt clippy
+      - name: Fmt
         run: cargo fmt
-      - name: clippy fix
+      - name: Clippy fix
         run: cargo clippy --all-features --all-targets --fix
-      - name: apply cleanup
+      - name: Apply cleanup
         uses: EndBug/add-and-commit@v9
         with:
           message: 'applying code formatting and lint fixes'
