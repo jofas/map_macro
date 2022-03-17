@@ -8,6 +8,6 @@
 
 * [x] badges
 
-* [ ] clippy action
+* [x] clippy action
 
 * [ ] publish `v0.2.1`

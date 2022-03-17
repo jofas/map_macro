@@ -16,6 +16,108 @@ The same goes for the `set!` macro only for
 
 This crate has zero dependencies.
 
+
 ## Usage
 
-TODO: examples
+
+### Maps
+
+Some languages provide a neat way for creating non-empty 
+maps/dictionaries.
+For example, in python you can create a non-empty map by running the
+following code:
+
+```python
+hello = {
+  "en": "Hello",
+  "de": "Hallo",
+  "fr": "Bonjour",
+  "es": "Hola",
+}
+```
+
+In rust, creating a non-empty map (rust has a built-in type in the
+standard library for creating hash maps `std::collections::HashMap`)
+is not as straight-forward:
+
+```rust
+use std::collections::HashMap;
+
+let mut hello = HashMap::new();
+
+hello.insert("en", "Hello");
+hello.insert("de", "Hallo");
+hello.insert("fr", "Bonjour");
+hello.insert("es", "Hola");
+```
+
+More less-readable boilerplate code is needed in rust to create a
+non-empty map.
+Even worse, `hello` must be declared as mutable, even if we do not
+want it to be mutable after we have added our four entries.
+The `map-macro` crate offers a better way of declaring non-empty
+maps, with the `map!` macro.
+Creating the same `hello` map from the example above can be simplified
+to:
+
+```rust
+use map_macro::map;
+
+let hello = map! {
+  "en" => "Hello",
+  "de" => "Hallo",
+  "fr" => "Bonjour",
+  "es" => "Hola",
+};
+```
+
+That is it.
+Looks nearly as neat as the python version with the added benefit 
+that `hello` is not mutable after we have created it.
+
+Rust's standard library provides a similar macro for creating vectors,
+`vec!`.
+`map-macro` offers the equivalent macros for creating maps and sets.
+
+
+### Sets
+
+Rust has the same cumbersome creation process for creating sets (in 
+rust sets are provided by the standard library, too, via the 
+`std::collections::HashSet` struct).
+
+In python you can create a set like this:
+
+```python
+x = set([1, 2, 3])
+```
+
+Not as neat as a map, but still quite concise. 
+Dart even comes with syntactic sugar for creating a set:
+
+```dart
+final x = {1, 2, 3};
+```
+
+In rust, you would have to write:
+
+```rust
+use std::collections::HashSet;
+
+let mut x = HashSet::new();
+
+x.insert(1);
+x.insert(2);
+x.insert(3);
+```
+
+The `set!` macro provided by the `map-macro` crate lets you write the
+same code as:
+
+```
+use map_macro::set;
+
+let x = set! { 1, 2, 3};
+```
+
+Again, nearly as neat as Dart!
