@@ -1,6 +1,6 @@
 # TODO
 
-* [ ] crate documentation
+* [x] crate documentation
 
 * [ ] exposed artefacts documentation
 

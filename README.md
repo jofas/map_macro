@@ -75,6 +75,41 @@ That is it.
 Looks nearly as neat as the python version with the added benefit 
 that `hello` is not mutable after we have created it.
 
+The `map!` macro is powerful enough to create maps from non-static
+keys and values as well, you are not limited to literals.
+You can create a map like this:
+
+```rust
+use map_macro::map;
+
+fn hello_in_french() -> &'static str {
+  "Bonjour"
+}
+
+fn spanish_language_code() -> &'static str {
+  "es"
+}
+
+let hello = map! {
+  "en" => "Hello",
+  "de" => "Hallo",
+  "fr" => hello_in_french(),
+  spanish_language_code() => "Hola",
+};
+```
+
+Empty maps can be created as well, but must provide type hints for the
+compiler:
+
+```rust
+use std::collections::HashMap;
+use map_macro::map;
+
+let hello: HashMap<&str, &str> = map! {};
+
+assert_eq!(hello.len(), 0);
+```
+
 Rust's standard library provides a similar macro for creating vectors,
 `vec!`.
 `map-macro` offers the equivalent macros for creating maps and sets.
@@ -117,7 +152,28 @@ same code as:
 ```
 use map_macro::set;
 
-let x = set! { 1, 2, 3};
+let x = set! { 1, 2, 3 };
 ```
 
 Again, nearly as neat as Dart!
+
+The `set!` macro is as powerful as the `map!` macro:
+
+```rust
+use map_macro::set;
+
+fn one() -> i32 {
+  1
+}
+
+let x = set! { one(), 2, 3 };
+```
+
+```rust
+use std::collections::HashSet;
+use map_macro::set;
+
+let x: HashSet<i32> = set! {};
+
+assert_eq!(x.len(), 0);
+```
