@@ -10,4 +10,4 @@
 
 * [x] clippy action
 
-* [ ] publish `v0.2.1`
+* [x] publish `v0.2.1`
