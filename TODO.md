@@ -2,7 +2,7 @@
 
 * [x] crate documentation
 
-* [ ] exposed artefacts documentation
+* [x] exposed artefacts documentation
 
 * [x] build action 
 
