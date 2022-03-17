@@ -4,7 +4,7 @@
 
 * [ ] exposed artefacts documentation
 
-* [ ] build action 
+* [x] build action 
 
 * [ ] badges
 
