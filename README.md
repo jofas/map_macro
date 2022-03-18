@@ -112,10 +112,6 @@ let hello: HashMap<&str, &str> = map! {};
 assert_eq!(hello.len(), 0);
 ```
 
-Rust's standard library provides a similar macro for creating vectors,
-`vec!`.
-`map-macro` offers the equivalent macros for creating maps and sets.
-
 
 ### Sets
 
@@ -157,7 +153,7 @@ use map_macro::set;
 let x = set! { 1, 2, 3 };
 ```
 
-Again, nearly as neat as Dart!
+Again, nearly as neat as dart!
 
 The `set!` macro is as powerful as the `map!` macro:
 
