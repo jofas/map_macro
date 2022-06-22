@@ -1,6 +1,6 @@
 [package]
 name = "map-macro"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["jofas <jonas@fc-web.de>"]
 edition = "2018"
 license = "MIT"

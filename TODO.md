@@ -24,4 +24,4 @@
 
 * [x] documentation
 
-* [ ] publish `v0.2.2`
+* [x] publish `v0.2.2`
