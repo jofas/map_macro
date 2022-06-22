@@ -190,4 +190,103 @@ assert_eq!(x.len(), 0);
 
 ## Vectors without cloning
 
-TODO
+When using the `vec![some_value; count]` syntax, the type of
+`some_value` has to implement the `Clone` trait, because `some_value` 
+is cloned `count - 1` times into all the vector elements, except the
+first one.
+
+This could either be undesired behavior (you don't want clones of 
+`some_value`, because its type implements `Clone` in a way that 
+doesn't fit your needs) or the type you wish to pre-populate your
+vector with doesn't implement `Clone`.
+
+For example, this will result in a panic during compile time:
+
+```no_compile
+struct UnclonableWrapper(u8);
+
+// panics
+let x = vec![UnclonableWrapper(0); 5];
+```
+
+The `vec_no_clone` macro takes a different approach. 
+Instead of cloning `UnclonableWrapper(0)`, it treats it as an 
+expression which is called 5 times in this case.
+So 5 independent `UnclonableWrapper` objects, each with its own
+location in memory, are created:
+
+```rust
+use map_macro::vec_no_clone;
+
+struct UnclonableWrapper(u8);
+
+let x = vec_no_clone![UnclonableWrapper(0); 5];
+
+assert_eq!(x.len(), 5);
+```
+
+`vec_no_clone` is not only useful for types not implementing `Clone`,
+but also for types where cloning them is not what you want.
+The best example would be a reference counted pointer, `std::rc::Rc`.
+When you clone an `Rc` instance, a new smart pointer instance 
+referencing the same location in memory is created.
+If you'd rather have multiple independent reference counted pointers
+to different memory locations, you can use `vec_no_clone` as well:
+
+```rust
+use map_macro::vec_no_clone;
+
+use std::cell::RefCell;
+use std::rc::Rc;
+
+// simply clones the reference counted pointer for each element that 
+// is not the first
+let shared_vec = vec![Rc::new(RefCell::new(0)); 2];
+{
+  let mut first = shared_vec[0].borrow_mut();
+  *first += 1;
+}
+
+assert_eq!(*shared_vec[0].borrow(), 1);
+
+// the second element is a clone of the reference counted pointer at 
+// the first element of the vector, referencing the same address in
+// memory, therefore being mutated as well
+assert_eq!(*shared_vec[1].borrow(), 1);
+
+// the `vec_no_clone` macro does not clone the object created by the
+// first expression but instead calls the expression for each element 
+// in the vector, creating two independent objects, each with their 
+// own address in memory
+let unshared_vec = vec_no_clone![Rc::new(RefCell::new(0)); 2];
+
+{
+  let mut first = unshared_vec[0].borrow_mut();
+  *first += 1;
+}
+
+assert_eq!(*unshared_vec[0].borrow(), 1);
+
+// the second element is not the same cloned reference counted
+// pointer as it would be if it were constructed with the `vec!` macro
+// from the standard library like it was above, therefore it is not
+// mutated
+assert_eq!(*unshared_vec[1].borrow(), 0);
+```
+
+You can also use the macro with a list of elements, like `vec!`, 
+though `vec!` is probably faster:
+
+```rust
+use map_macro::vec_no_clone;
+
+let v1 = vec_no_clone![0, 1, 2, 3];
+let v2 = vec![0, 1, 2, 3];
+
+assert_eq!(v1, v2);
+
+let v1: Vec<u8> = vec_no_clone![];
+let v2: Vec<u8> = vec![];
+
+assert_eq!(v1, v2);
+```

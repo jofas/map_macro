@@ -22,6 +22,6 @@
 
 * [x] toc for toplevel documentation (with actions)
 
-* [ ] documentation
+* [x] documentation
 
 * [ ] publish `v0.2.2`
