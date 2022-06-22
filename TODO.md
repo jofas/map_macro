@@ -11,3 +11,13 @@
 * [x] clippy action
 
 * [x] publish `v0.2.1`
+
+* [x] `vec_no_clone` macro
+
+* [x] `vec_no_clone` function
+
+* [ ] documentation
+
+* [ ] tests
+
+* [ ] publish `v0.2.2`

@@ -64,3 +64,33 @@ macro_rules! set {
     }
   };
 }
+
+/// **Example:**
+///
+/// ```rust
+/// use map_macro::vec_no_clone;
+///
+/// // atomic types do not implement the `Clone` trait
+/// use std::sync::atomic::AtomicI64;
+///
+/// let x = vec_no_clone![AtomicI64::new(0); 10];
+///
+/// assert_eq!(x.len(), 10);
+/// ```
+///
+#[macro_export]
+macro_rules! vec_no_clone {
+  {$v: expr; $c: expr} => {
+    $crate::vec_no_clone(|| $v, $c)
+  };
+}
+
+pub fn vec_no_clone<T, F: Fn() -> T>(f: F, c: usize) -> Vec<T> {
+  let mut vec = Vec::with_capacity(c);
+
+  for _ in 0..c {
+    vec.push(f());
+  }
+
+  vec
+}
