@@ -209,7 +209,7 @@ struct UnclonableWrapper(u8);
 let x = vec![UnclonableWrapper(0); 5];
 ```
 
-The `vec_no_clone` macro takes a different approach. 
+The `vec_no_clone!` macro takes a different approach. 
 Instead of cloning `UnclonableWrapper(0)`, it treats it as an 
 expression which is called 5 times in this case.
 So 5 independent `UnclonableWrapper` objects, each with its own
@@ -225,13 +225,27 @@ let x = vec_no_clone![UnclonableWrapper(0); 5];
 assert_eq!(x.len(), 5);
 ```
 
-`vec_no_clone` is not only useful for types not implementing `Clone`,
+Without `vec_no_clone!` you'd have to write something far less 
+readable and more complex to reason about like this to create the same
+vector:
+
+```rust
+struct UnclonableWrapper(u8);
+
+let x: Vec<UnclonableWrapper> = (0..5)
+  .map(|_| UnclonableWrapper(0))
+  .collect();
+
+assert_eq!(x.len(), 5);
+```
+
+`vec_no_clone!` is not only useful for types not implementing `Clone`,
 but also for types where cloning them is not what you want.
 The best example would be a reference counted pointer, `std::rc::Rc`.
 When you clone an `Rc` instance, a new smart pointer instance 
 referencing the same location in memory is created.
 If you'd rather have multiple independent reference counted pointers
-to different memory locations, you can use `vec_no_clone` as well:
+to different memory locations, you can use `vec_no_clone!` as well:
 
 ```rust
 use map_macro::vec_no_clone;
@@ -254,7 +268,7 @@ assert_eq!(*shared_vec[0].borrow(), 1);
 // memory, therefore being mutated as well
 assert_eq!(*shared_vec[1].borrow(), 1);
 
-// the `vec_no_clone` macro does not clone the object created by the
+// the `vec_no_clone!` macro does not clone the object created by the
 // first expression but instead calls the expression for each element 
 // in the vector, creating two independent objects, each with their 
 // own address in memory
