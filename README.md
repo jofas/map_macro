@@ -7,7 +7,7 @@
 [![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://docs.rs/map-macro/latest/map_macro)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Declarative `map!`, `set!` and `vec_no_copy!` macros.
+Declarative `map!`, `set!` and `vec_no_clone!` macros.
 
 The `map!` macro allows for statically initializing a 
 `std::collections::HashMap`.
@@ -16,7 +16,7 @@ The same goes for the `set!` macro only for
 The macros are equivalent to the `vec!` macro from the rust standard
 library.
 
-The `vec_no_copy` is a more flexible version of the `vec!`
+The `vec_no_clone` is a more flexible version of the `vec!`
 macro the standard library provides.
 It allows you to create vectors with the `vec![some_value; count]`,
 without cloning `some_value`.
