@@ -78,6 +78,44 @@ macro_rules! set {
 /// assert_eq!(x.len(), 10);
 /// ```
 ///
+/// ```rust
+/// use map_macro::vec_no_clone;
+///
+/// use std::cell::RefCell;
+/// use std::rc::Rc;
+///
+/// // simply clones the reference counted pointer for each element
+/// // that is not the first
+/// let shared_vec = vec![Rc::new(RefCell::new(0)); 2];
+///
+/// {
+///   let mut first = shared_vec[0].borrow_mut();
+///   *first += 1;
+/// }
+///
+/// assert_eq!(*shared_vec[0].borrow(), 1);
+/// // the second element is a clone of the reference counted pointer
+/// // at the first element of the vector, therefore referencing the
+/// // same address in memory
+/// assert_eq!(*shared_vec[1].borrow(), 1);
+///
+/// // the `vec_no_clone` macro does not clone the object created
+/// // by the first expression but instead calls the expression for
+/// // each element in the vector
+/// let unshared_vec = vec_no_clone![Rc::new(RefCell::new(0)); 2];
+///
+/// {
+///   let mut first = unshared_vec[0].borrow_mut();
+///   *first += 1;
+/// }
+///
+/// assert_eq!(*unshared_vec[0].borrow(), 1);
+/// // the second element is not the same cloned reference counted
+/// // pointer as it would be if it were constructed with the
+/// // `vec!` macro from the standard library like it was above
+/// assert_eq!(*unshared_vec[1].borrow(), 0);
+/// ```
+///
 #[macro_export]
 macro_rules! vec_no_clone {
   {$v: expr; $c: expr} => {

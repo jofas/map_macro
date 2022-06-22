@@ -16,8 +16,12 @@
 
 * [x] `vec_no_clone` function
 
+* [x] example with `Rc`
+
 * [ ] documentation
 
 * [ ] tests
+
+* [ ] toc for toplevel documentation (with actions)
 
 * [ ] publish `v0.2.2`
