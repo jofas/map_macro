@@ -72,6 +72,7 @@ fn vec_no_clone1() {
 }
 
 #[test]
+#[allow(clippy::reversed_empty_ranges)]
 fn vec_no_clone_empty() {
   let v = vec_no_clone![UnclonableWrapper(0); 0];
 
