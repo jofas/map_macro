@@ -65,6 +65,12 @@ macro_rules! set {
   };
 }
 
+/// More flexible version of the [vec](std::vec) macro from the
+/// standard library.
+///
+/// See this [crate's](crate) documentation for a description and more
+/// examples on how to use this macro.
+///
 /// **Example:**
 ///
 /// ```rust
