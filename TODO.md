@@ -20,7 +20,7 @@
 
 * [x] tests
 
-* [ ] toc for toplevel documentation (with actions)
+* [x] toc for toplevel documentation (with actions)
 
 * [ ] documentation
 
