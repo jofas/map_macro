@@ -117,19 +117,47 @@ macro_rules! set {
 /// assert_eq!(*unshared_vec[1].borrow(), 0);
 /// ```
 ///
+/// You can also use the macro with a list of elements, like `vec!`,
+/// though `vec!` is probably faster:
+///
+/// ```rust
+/// use map_macro::vec_no_clone;
+///
+/// let v1 = vec_no_clone![0, 1, 2, 3];
+/// let v2 = vec![0, 1, 2, 3];
+///
+/// assert_eq!(v1, v2);
+///
+/// let v1: Vec<u8> = vec_no_clone![];
+/// let v2: Vec<u8> = vec![];
+///
+/// assert_eq!(v1, v2);
+/// ```
+///
 #[macro_export]
 macro_rules! vec_no_clone {
   {$v: expr; $c: expr} => {
-    $crate::vec_from_fn(|| $v, $c)
+    {
+      //$crate::vec_from_fn(|| $v, $c)
+      //
+      let mut vec = Vec::with_capacity($c);
+
+      for _ in 0..$c {
+        vec.push($v);
+      }
+
+      vec
+    }
   };
-}
+  {$($v: expr),* $(,)?} => {
+    {
+      let mut vec = Vec::new();
 
-pub fn vec_from_fn<T, F: Fn() -> T>(f: F, c: usize) -> Vec<T> {
-  let mut vec = Vec::with_capacity(c);
+      $(
+        vec.push($v);
+      )*
 
-  for _ in 0..c {
-    vec.push(f());
-  }
-
-  vec
+      vec
+    }
+  };
 }

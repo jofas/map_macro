@@ -7,7 +7,7 @@
 [![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://docs.rs/map-macro/latest/map_macro)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Declarative `map!` and `set!` macros.
+Declarative `map!`, `set!` and `vec_no_copy!` macros.
 
 The `map!` macro allows for statically initializing a 
 `std::collections::HashMap`.
