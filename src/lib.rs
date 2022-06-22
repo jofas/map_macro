@@ -138,8 +138,6 @@ macro_rules! set {
 macro_rules! vec_no_clone {
   {$v: expr; $c: expr} => {
     {
-      //$crate::vec_from_fn(|| $v, $c)
-      //
       let mut vec = Vec::with_capacity($c);
 
       for _ in 0..$c {
