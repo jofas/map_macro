@@ -13,8 +13,13 @@ The `map!` macro allows for statically initializing a
 `std::collections::HashMap`.
 The same goes for the `set!` macro only for 
 `std::collections::HashSet`.
-The macros are equivalent to the `vec!` macro offered by the rust
-standard library for initializing `Vec` instances.
+The macros are equivalent to the `vec!` macro from the rust standard
+library.
+
+The `vec_no_copy` is a more flexible version of the `vec!`
+macro the standard library provides.
+It allows you to create vectors with the `vec![some_value; count]`,
+without cloning `some_value`.
 
 This crate has zero dependencies.
 
