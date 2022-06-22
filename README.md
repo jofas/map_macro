@@ -22,6 +22,9 @@ This crate has zero dependencies.
 ## Table of Contents
 
 <!--ts-->
+   * [Maps](#maps)
+   * [Sets](#sets)
+   * [Vectors without cloning](#vectors-without-cloning)
 <!--te-->
 
 
