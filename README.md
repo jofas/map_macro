@@ -19,10 +19,13 @@ standard library for initializing `Vec` instances.
 This crate has zero dependencies.
 
 
-## Usage
+## Table of Contents
+
+<!--ts-->
+<!--te-->
 
 
-### Maps
+## Maps
 
 Some languages provide a neat way for creating non-empty 
 maps/dictionaries.
@@ -113,7 +116,7 @@ assert_eq!(hello.len(), 0);
 ```
 
 
-### Sets
+## Sets
 
 Rust has the same cumbersome creation process for creating sets (in 
 rust sets are provided by the standard library, too, via the 
@@ -175,3 +178,8 @@ let x: HashSet<i32> = set! {};
 
 assert_eq!(x.len(), 0);
 ```
+
+
+## Vectors without cloning
+
+TODO

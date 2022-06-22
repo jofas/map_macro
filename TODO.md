@@ -20,8 +20,8 @@
 
 * [x] tests
 
-* [ ] documentation
-
 * [ ] toc for toplevel documentation (with actions)
+
+* [ ] documentation
 
 * [ ] publish `v0.2.2`
