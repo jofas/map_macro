@@ -70,10 +70,11 @@ macro_rules! set {
 /// ```rust
 /// use map_macro::vec_no_clone;
 ///
-/// // atomic types do not implement the `Clone` trait
-/// use std::sync::atomic::AtomicI64;
+/// struct UnclonableWrapper(u8);
 ///
-/// let x = vec_no_clone![AtomicI64::new(0); 10];
+/// // the `vec!` macro from the standard library would panic at this
+/// // call
+/// let x = vec_no_clone![UnclonableWrapper(0); 10];
 ///
 /// assert_eq!(x.len(), 10);
 /// ```
