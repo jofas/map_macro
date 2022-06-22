@@ -119,11 +119,11 @@ macro_rules! set {
 #[macro_export]
 macro_rules! vec_no_clone {
   {$v: expr; $c: expr} => {
-    $crate::vec_no_clone(|| $v, $c)
+    $crate::vec_from_fn(|| $v, $c)
   };
 }
 
-pub fn vec_no_clone<T, F: Fn() -> T>(f: F, c: usize) -> Vec<T> {
+pub fn vec_from_fn<T, F: Fn() -> T>(f: F, c: usize) -> Vec<T> {
   let mut vec = Vec::with_capacity(c);
 
   for _ in 0..c {

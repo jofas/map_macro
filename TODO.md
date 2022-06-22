@@ -18,9 +18,9 @@
 
 * [x] example with `Rc`
 
-* [ ] documentation
+* [x] tests
 
-* [ ] tests
+* [ ] documentation
 
 * [ ] toc for toplevel documentation (with actions)
 
