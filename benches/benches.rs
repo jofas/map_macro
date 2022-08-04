@@ -1,12 +1,14 @@
 use map_macro::map;
 
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{
+  black_box, criterion_group, criterion_main, Criterion,
+};
 
 use std::time::Duration;
 
 fn reapeatedly_allocate_map() {
   for _ in 0..500_000 {
-    map!{
+    map! {
       0 => "a",
       1 => "b",
       2 => "c",
@@ -39,10 +41,12 @@ fn reapeatedly_allocate_map() {
 
 #[allow(clippy::unit_arg)]
 fn bench_map_allocation(c: &mut Criterion) {
-  c.bench_function(
-    "map allocation",
-    |b| b.iter(|| black_box(reapeatedly_allocate_map())),
-  );
+  c.bench_function("map allocation", |b| {
+    b.iter(|| {
+      reapeatedly_allocate_map();
+      black_box(())
+    })
+  });
 }
 
 criterion_group!(
