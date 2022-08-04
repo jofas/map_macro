@@ -13,3 +13,10 @@ repository = "https://github.com/jofas/map_macro"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+[dev-dependencies]
+criterion = { version = "^0.3.6", features = ["html_reports"] }
+
+[[bench]]
+name = "benches"
+harness = false
