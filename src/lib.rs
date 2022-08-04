@@ -21,9 +21,16 @@
 ///
 #[macro_export]
 macro_rules! map {
+  (@to_unit $($_:tt)*) => (());
+  (@count $($tail:expr),*) => (
+    <[()]>::len(&[$(map!(@to_unit $tail)),*])
+  );
+
   {$($k: expr => $v: expr),* $(,)?} => {
     {
-      let mut map = std::collections::HashMap::new();
+      let mut map = std::collections::HashMap::with_capacity(
+        map!(@count $($k),*),
+      );
 
       $(
         map.insert($k, $v);
@@ -52,9 +59,16 @@ macro_rules! map {
 ///
 #[macro_export]
 macro_rules! set {
+  (@to_unit $($_:tt)*) => (());
+  (@count $($tail:expr),*) => (
+    <[()]>::len(&[$(set!(@to_unit $tail)),*])
+  );
+
   {$($v: expr),* $(,)?} => {
     {
-      let mut set = std::collections::HashSet::new();
+      let mut set = std::collections::HashSet::with_capacity(
+        set!(@count $($v),*),
+      );
 
       $(
         set.insert($v);
@@ -87,6 +101,11 @@ macro_rules! set {
 ///
 #[macro_export]
 macro_rules! vec_no_clone {
+  (@to_unit $($_:tt)*) => (());
+  (@count $($tail:expr),*) => (
+    <[()]>::len(&[$(vec_no_clone!(@to_unit $tail)),*])
+  );
+
   {$v: expr; $c: expr} => {
     {
       let mut vec = Vec::with_capacity($c);
@@ -100,7 +119,9 @@ macro_rules! vec_no_clone {
   };
   {$($v: expr),* $(,)?} => {
     {
-      let mut vec = Vec::new();
+      let mut vec = Vec::with_capacity(
+        vec_no_clone!(@count $($v),*),
+      );
 
       $(
         vec.push($v);
