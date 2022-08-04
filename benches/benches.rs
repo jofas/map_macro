@@ -37,6 +37,7 @@ fn reapeatedly_allocate_map() {
   }
 }
 
+#[allow(clippy::unit_arg)]
 fn bench_map_allocation(c: &mut Criterion) {
   c.bench_function(
     "map allocation",
