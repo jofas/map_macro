@@ -201,7 +201,7 @@ maps and sets based on the b-tree data structure
 (`std::collections::BTreeMap` and `std::collections::BTreeSet`).
 They offer similar functionality to their hashtable-based 
 counterparts.
-`map-macro` offers the `btree_map!` and `btree_set!` macros to 
+`map-macro` provides the `btree_map!` and `btree_set!` macros to 
 statically initialize the b-tree-based maps and sets.
 They work exactly like the `map!` and `set!` macros:
 
