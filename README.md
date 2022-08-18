@@ -34,6 +34,7 @@ This crate has zero dependencies.
 <!--ts-->
    * [Maps](#maps)
    * [Sets](#sets)
+   * [B-tree based maps and sets](#b-tree-based-maps-and-sets)
    * [Vectors without cloning](#vectors-without-cloning)
 <!--te-->
 
