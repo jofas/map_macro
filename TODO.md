@@ -6,4 +6,4 @@
 
 * [x] `btree_set`
 
-* [ ] publish `v0.2.4`
+* [x] publish `v0.2.4`
