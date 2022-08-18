@@ -7,12 +7,17 @@
 [![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://docs.rs/map-macro/latest/map_macro)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Declarative `map!`, `set!` and `vec_no_clone!` macros.
+Declarative `map!`, `set!`, `btree_map!`, `btree_set!` and
+`vec_no_clone!` macros.
 
 The `map!` macro allows for statically initializing a 
 `std::collections::HashMap`.
 The same goes for the `set!` macro only for 
 `std::collections::HashSet`.
+Both macros have an equivalent version using a b-tree data structure
+rather than a hashtable-based implementation, `btree_map!` and
+`btree_set!` for statically initializing `std::collections::BTreeMap`
+and `std::collections::BTreeSet`, respectively.
 The macros are equivalent to the `vec!` macro from the rust standard
 library.
 
@@ -185,6 +190,37 @@ use map_macro::set;
 let x: HashSet<i32> = set! {};
 
 assert_eq!(x.len(), 0);
+```
+
+
+## B-tree based maps and sets 
+
+Besides hashtable-based maps and sets, rust's standard library offers 
+maps and sets based on the b-tree data structure 
+(`std::collections::BTreeMap` and `std::collections::BTreeSet).
+They offer similar functionality to their hashtable-based 
+counterparts.
+`map-macro` offers the `btree_map!` and `btree_set!` macros to 
+statically initialize the b-tree-based maps and sets.
+They work exactly like the `map!` and `set!` macros:
+
+```rust
+use map_macro::{btree_map, btree_set};
+
+let hello = btree_map! {
+  "en" => "Hello",
+  "de" => "Hallo",
+  "fr" => "Bonjour",
+  "es" => "Hola",
+};
+
+assert_eq!(hello["en"], "Hello");
+
+let x = btree_set! { 1, 2, 3 };
+
+assert!(x.contains(&1));
+
+assert!(!x.contains(&4))
 ```
 
 

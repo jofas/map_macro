@@ -41,6 +41,41 @@ macro_rules! map {
   };
 }
 
+/// Macro for creating a [map](std::collections::BTreeMap) based on
+/// a b-tree data structure.
+///
+/// Works just like the [map!] macro.
+/// Set this [crate's](crate) documentation for more examples on how
+/// to use this macro.
+///
+/// **Example:**
+///
+/// ```rust
+/// use map_macro::btree_map;
+///
+/// let goodbye = btree_map! {
+///   "en" => "Goodbye",
+///   "de" => "Auf Wiedersehen",
+///   "fr" => "Au revoir",
+///   "es" => "Adios",
+/// };
+/// ```
+///
+#[macro_export]
+macro_rules! btree_map {
+  {$($k: expr => $v: expr),* $(,)?} => {
+    {
+      let mut map = std::collections::BTreeMap::new();
+
+      $(
+        map.insert($k, $v);
+      )*
+
+      map
+    }
+  };
+}
+
 /// Macro for creating a [set](std::collections::HashSet).
 ///
 /// Equivalent to the [vec!] macro for [vectors](std::vec::Vec).
@@ -69,6 +104,38 @@ macro_rules! set {
       let mut set = std::collections::HashSet::with_capacity(
         set!(@count $($v),*),
       );
+
+      $(
+        set.insert($v);
+      )*
+
+      set
+    }
+  };
+}
+
+/// Macro for creating a [set](std::collections::BTreeSet) based on
+/// a b-tree data structure.
+///
+/// Works just like the [set!] macro.
+/// Set this [crate's](crate) documentation for more examples on how
+/// to use this macro.
+///
+/// **Example:**
+///
+/// ```rust
+/// use map_macro::btree_set;
+///
+/// let x = btree_set! { 1, 2, 3, 3, 4 };
+///
+/// assert_eq!(x.len(), 4);
+/// ```
+///
+#[macro_export]
+macro_rules! btree_set {
+  {$($v: expr),* $(,)?} => {
+    {
+      let mut set = std::collections::BTreeSet::new();
 
       $(
         set.insert($v);

@@ -1,4 +1,4 @@
-use map_macro::{map, set, vec_no_clone};
+use map_macro::{btree_map, btree_set, map, set, vec_no_clone};
 
 #[test]
 fn map1() {
@@ -45,6 +45,62 @@ fn set1() {
 #[test]
 fn set2() {
   let s = set! { 0, 1, 2, 3, 0 };
+
+  assert_eq!(s.len(), 4);
+
+  assert!(s.contains(&0));
+  assert!(s.contains(&1));
+  assert!(s.contains(&2));
+  assert!(s.contains(&3));
+
+  assert!(!s.contains(&4));
+}
+
+#[test]
+fn btree_map1() {
+  let m = btree_map! {
+    "en" => "Hello",
+    "de" => "Hallo",
+    "fr" => "Bonjour",
+    "es" => "Hola",
+  };
+
+  assert_eq!(m["en"], "Hello");
+  assert_eq!(m["de"], "Hallo");
+  assert_eq!(m["fr"], "Bonjour");
+  assert_eq!(m["es"], "Hola");
+}
+
+#[test]
+fn btree_map2() {
+  let m = btree_map! {
+    0 => "a",
+    1 => "b",
+    2 => "c",
+  };
+
+  assert_eq!(m[&0], "a");
+  assert_eq!(m[&1], "b");
+  assert_eq!(m[&2], "c");
+}
+
+#[test]
+fn btree_set1() {
+  let s = btree_set! { "a", "b", "c", "d" };
+
+  assert_eq!(s.len(), 4);
+
+  assert!(s.contains("a"));
+  assert!(s.contains("b"));
+  assert!(s.contains("c"));
+  assert!(s.contains("d"));
+
+  assert!(!s.contains("e"));
+}
+
+#[test]
+fn btree_set2() {
+  let s = btree_set! { 0, 1, 2, 3, 0 };
 
   assert_eq!(s.len(), 4);
 
