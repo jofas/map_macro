@@ -1,3 +1,5 @@
+#![cfg(not(tarpaulin_include))]
+
 use map_macro::{map, set, vec_no_clone};
 
 use criterion::{
