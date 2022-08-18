@@ -197,7 +197,7 @@ assert_eq!(x.len(), 0);
 
 Besides hashtable-based maps and sets, rust's standard library offers 
 maps and sets based on the b-tree data structure 
-(`std::collections::BTreeMap` and `std::collections::BTreeSet).
+(`std::collections::BTreeMap` and `std::collections::BTreeSet`).
 They offer similar functionality to their hashtable-based 
 counterparts.
 `map-macro` offers the `btree_map!` and `btree_set!` macros to 
