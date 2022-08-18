@@ -288,8 +288,7 @@ assert_eq!(*unshared_vec[0].borrow(), 1);
 assert_eq!(*unshared_vec[1].borrow(), 0);
 ```
 
-You can also use the macro with a list of elements, like `vec!`, 
-though `vec!` is probably faster:
+You can also use the macro with a list of elements, like `vec!`:
 
 ```rust
 use map_macro::vec_no_clone;

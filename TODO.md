@@ -25,3 +25,9 @@
 * [x] documentation
 
 * [x] publish `v0.2.2`
+
+* [x] `vec_no_clone` fallback to `vec`
+
+* [ ] `btree_map`
+
+* [ ] `btree_set`

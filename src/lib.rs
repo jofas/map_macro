@@ -101,11 +101,6 @@ macro_rules! set {
 ///
 #[macro_export]
 macro_rules! vec_no_clone {
-  (@to_unit $($_:tt)*) => (());
-  (@count $($tail:expr),*) => (
-    <[()]>::len(&[$(vec_no_clone!(@to_unit $tail)),*])
-  );
-
   {$v: expr; $c: expr} => {
     {
       let mut vec = Vec::with_capacity($c);
@@ -119,15 +114,7 @@ macro_rules! vec_no_clone {
   };
   {$($v: expr),* $(,)?} => {
     {
-      let mut vec = Vec::with_capacity(
-        vec_no_clone!(@count $($v),*),
-      );
-
-      $(
-        vec.push($v);
-      )*
-
-      vec
+      vec![$($v),*]
     }
   };
 }
