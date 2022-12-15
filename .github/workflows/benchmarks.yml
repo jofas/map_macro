@@ -1,0 +1,40 @@
+name: Benchmark
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: write
+jobs:
+  Benchmark:
+    runs-on: ubuntu-latest
+    container:
+      image: rust:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Load cached dependencies
+        uses: Swatinem/rust-cache@v2
+      - name: Run benchmark
+        run: cargo bench -- --output-format bencher > bench.txt
+      - name: Load previous runs from cache
+        uses: actions/cache@v3
+        with:
+          path: cache/benchmarks
+          key: benchmark-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: benchmark-${{ runner.os }}
+      - name: Save benchmark
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          tool: 'cargo'
+          output-file-path: bench.txt
+          external-data-json-path: cache/benchmarks/benchmarks.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          save-data-file: ${{ github.event_name != 'pull_request' }}
+          comment-always: true
+          comment-on-alert: true
+          fail-on-alert: false
+          alert-threshold: '150%'
