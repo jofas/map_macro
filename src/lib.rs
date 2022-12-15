@@ -41,7 +41,7 @@ macro_rules! map {
   };
 }
 
-/// Explicitly typed equivalent of [map!].
+/// Explicitly typed equivalent of [`map!`].
 ///
 /// Set this [crate's](crate) documentation for more examples on how
 /// to use this macro.
@@ -121,7 +121,7 @@ macro_rules! btree_map {
   };
 }
 
-/// Explicitly typed equivalent of [btree_map!].
+/// Explicitly typed equivalent of [`btree_map!`].
 ///
 /// Set this [crate's](crate) documentation for more examples on how
 /// to use this macro.
