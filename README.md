@@ -7,24 +7,19 @@
 [![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://docs.rs/map-macro/latest/map_macro)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Declarative `map!`, `set!`, `btree_map!`, `btree_set!` and
-`vec_no_clone!` macros.
+Declarative macros for initializing collections from the rust 
+[standard library][std].
 
 The `map!` macro allows for statically initializing a 
-`std::collections::HashMap`.
-The same goes for the `set!` macro only for 
-`std::collections::HashSet`.
-Both macros have an equivalent version using a b-tree data structure
-rather than a hashtable-based implementation, `btree_map!` and
-`btree_set!` for statically initializing `std::collections::BTreeMap`
-and `std::collections::BTreeSet`, respectively.
-The macros are equivalent to the `vec!` macro from the rust standard
-library.
+[hash map][hash map].
+`set!` is does the same, only for [hash sets][hash set].
+Both macros have an equivalent version using a b-tree data structure,
+`btree_map!` and `btree_set!`.
 
 The `vec_no_clone` is a more flexible version of the `vec!`
 macro the standard library provides.
-It allows you to create vectors with the `vec![some_value; count]`,
-without cloning `some_value`.
+It allows you to create vectors with the `vec![some_value; count]` 
+syntax, without cloning `some_value`.
 
 This crate has zero dependencies.
 
@@ -41,7 +36,7 @@ This crate has zero dependencies.
 
 ## Maps
 
-Some languages provide a neat way for creating non-empty 
+Some languages provide neat syntactic sugar for creating non-empty 
 maps/dictionaries.
 For example, in python you can create a non-empty map by running the
 following code:
@@ -55,9 +50,7 @@ hello = {
 }
 ```
 
-In rust, creating a non-empty map (rust has a built-in type in the
-standard library for creating hash maps `std::collections::HashMap`)
-is not as straight-forward:
+In rust, creating a non-empty hash map is not as straight-forward:
 
 ```rust
 use std::collections::HashMap;
@@ -70,12 +63,11 @@ hello.insert("fr", "Bonjour");
 hello.insert("es", "Hola");
 ```
 
-More less-readable boilerplate code is needed in rust to create a
-non-empty map.
+More less-readable boilerplate code is needed.
 Even worse, `hello` must be declared as mutable, even if we do not
 want it to be mutable after we have added our four entries.
 The `map-macro` crate offers a better way of declaring non-empty
-maps, with the `map!` macro.
+maps using the `map!` macro.
 Creating the same `hello` map from the example above can be simplified
 to:
 
@@ -90,13 +82,12 @@ let hello = map! {
 };
 ```
 
-That is it.
-Looks nearly as neat as the python version with the added benefit 
-that `hello` is not mutable after we have created it.
+That's it.
+Looks nearly as neat as the python version, with the added benefit 
+that `hello` is not mutable after we created it.
 
 The `map!` macro is powerful enough to create maps from non-static
-keys and values as well, you are not limited to literals.
-You can create a map like this:
+keys and values as well, you are not limited to literals:
 
 ```rust
 use map_macro::map;
@@ -117,24 +108,77 @@ let hello = map! {
 };
 ```
 
-Empty maps can be created as well, but must provide type hints for the
-compiler:
+
+### Explicitly typed values for trait objects
+
+As shown in the examples above, rust uses type inference to infer
+the correct type for the created hash map.
+Unfortunately, type inference alone can not detect 
+[trait objects][trait objects].
+This will not work, because `rustc` is unable to figure out the
+right type when creating `hello`:
+
+```compile_fail
+use std::collections::HashMap;
+use std::fmt::Debug;
+
+use map_macro::map;
+
+let hello: HashMap<&str, &dyn Debug> = map! {
+  "en" => &"Hello",
+  "de" => &"Hallo",
+  "fr" => &"Bonjour",
+  "es" => &"Hola",
+};
+```
+
+The `map_e!` macro enables you to use trait objects as values through
+[type coercion][type coercion], making the example above compile
+successfully:
 
 ```rust
 use std::collections::HashMap;
-use map_macro::map;
+use std::fmt::Debug;
 
-let hello: HashMap<&str, &str> = map! {};
+use map_macro::map_e;
 
-assert_eq!(hello.len(), 0);
+let hello: HashMap<&str, &dyn Debug> = map_e! {
+  "en" => &"Hello",
+  "de" => &"Hallo",
+  "fr" => &"Bonjour",
+  "es" => &"Hola",
+};
+```
+
+Note that you need to give an explicit type to the binding when you 
+use `map_e!`, because it relies on knowing what type it should
+coerce the values to.
+Also, only values and not keys can be trait objects, because keys must
+implement the [`Hash`][hash] trait, which is not 
+[object save][object safe].
+
+[`btree_map_e!`](#b-tree-based-maps-and-sets) is the equivalent to
+`map_e!` for creating a [b-tree map][b-tree map] with trait object
+values:
+
+```rust
+use std::collections::BTreeMap;
+use std::fmt::Debug;
+
+use map_macro::btree_map_e;
+
+let hello: BTreeMap<&str, &dyn Debug> = btree_map_e! {
+  "en" => &"Hello",
+  "de" => &"Hallo",
+  "fr" => &"Bonjour",
+  "es" => &"Hola",
+};
 ```
 
 
 ## Sets
 
-Rust has the same cumbersome creation process for creating sets (in 
-rust sets are provided by the standard library, too, via the 
-`std::collections::HashSet` struct).
+Rust has the same cumbersome creation process for creating sets.
 
 In python you can create a set like this:
 
@@ -197,8 +241,7 @@ assert_eq!(x.len(), 0);
 ## B-tree based maps and sets 
 
 Besides hashtable-based maps and sets, rust's standard library offers 
-maps and sets based on the b-tree data structure 
-(`std::collections::BTreeMap` and `std::collections::BTreeSet`).
+maps and sets based on the b-tree data structure.
 They offer similar functionality to their hashtable-based 
 counterparts.
 `map-macro` provides the `btree_map!` and `btree_set!` macros to 
@@ -325,6 +368,22 @@ assert_eq!(*unshared_vec[0].borrow(), 1);
 assert_eq!(*unshared_vec[1].borrow(), 0);
 ```
 
+Note that `vec_no_clone!` treats the value as an expression, so you
+must provide the initialization as input directly.
+This, for example, won't work:
+
+```compile_fail
+use map_macro::vec_no_clone;
+
+struct UnclonableWrapper(u8);
+
+let a = UnclonableWrapper(0);
+
+// a will have moved into the first element of x, raising a compile
+// time error for the second element.
+let x = vec_no_clone![a; 5];
+```
+
 You can also use the macro with a list of elements, like `vec!`:
 
 ```rust
@@ -340,3 +399,13 @@ let v2: Vec<u8> = vec![];
 
 assert_eq!(v1, v2);
 ```
+
+
+[std]: https://doc.rust-lang.org/std/collections/index.html
+[hash map]: https://doc.rust-lang.org/std/collections/hash_map/struct.HashMap.html
+[hash set]: https://doc.rust-lang.org/std/collections/hash_set/struct.HashSet.html
+[trait objects]: https://doc.rust-lang.org/reference/types/trait-object.html
+[type coercion]: https://doc.rust-lang.org/reference/type-coercions.html
+[b-tree map]: https://doc.rust-lang.org/std/collections/struct.BTreeMap.html
+[hash]: https://doc.rust-lang.org/std/hash/trait.Hash.html
+[object safe]: https://doc.rust-lang.org/reference/items/traits.html#object-safety

@@ -41,6 +41,51 @@ macro_rules! map {
   };
 }
 
+/// Explicitly typed equivalent of [map!].
+///
+/// Set this [crate's](crate) documentation for more examples on how
+/// to use this macro.
+///
+/// **Example:**
+///
+/// ```rust
+/// use std::collections::HashMap;
+/// use std::fmt::Debug;
+///
+/// use map_macro::map_e;
+///
+/// let goodbye: HashMap<&str, &dyn Debug> = map_e! {
+///   "en" => &"Goodbye",
+///   "de" => &"Auf Wiedersehen",
+///   "fr" => &"Au revoir",
+///   "es" => &"Adios",
+/// };
+///
+/// println!("{:?}", goodbye);
+/// ```
+///
+#[macro_export]
+macro_rules! map_e {
+  (@to_unit $($_:tt)*) => (());
+  (@count $($tail:expr),*) => (
+    <[()]>::len(&[$(map_e!(@to_unit $tail)),*])
+  );
+
+  {$($k: expr => $v: expr),* $(,)?} => {
+    {
+      let mut map = std::collections::HashMap::with_capacity(
+        map_e!(@count $($k),*),
+      );
+
+      $(
+        map.insert($k, $v as _);
+      )*
+
+      map
+    }
+  };
+}
+
 /// Macro for creating a [map](std::collections::BTreeMap) based on
 /// a b-tree data structure.
 ///
@@ -69,6 +114,42 @@ macro_rules! btree_map {
 
       $(
         map.insert($k, $v);
+      )*
+
+      map
+    }
+  };
+}
+
+/// Explicitly typed equivalent of [btree_map!].
+///
+/// Set this [crate's](crate) documentation for more examples on how
+/// to use this macro.
+///
+/// **Example:**
+///
+/// ```rust
+/// use std::collections::BTreeMap;
+/// use std::fmt::Debug;
+///
+/// use map_macro::btree_map_e;
+///
+/// let goodbye: BTreeMap<&str, &dyn Debug> = btree_map_e! {
+///   "en" => &"Goodbye",
+///   "de" => &"Auf Wiedersehen",
+///   "fr" => &"Au revoir",
+///   "es" => &"Adios",
+/// };
+/// ```
+///
+#[macro_export]
+macro_rules! btree_map_e {
+  {$($k: expr => $v: expr),* $(,)?} => {
+    {
+      let mut map = std::collections::BTreeMap::new();
+
+      $(
+        map.insert($k, $v as _);
       )*
 
       map
@@ -146,8 +227,7 @@ macro_rules! btree_set {
   };
 }
 
-/// More flexible version of the [vec](std::vec) macro from the
-/// standard library.
+/// More flexible version of the [vec!] macro.
 ///
 /// See this [crate's](crate) documentation for a description and more
 /// examples on how to use this macro.

@@ -1,4 +1,15 @@
-use map_macro::{btree_map, btree_set, map, set, vec_no_clone};
+use std::collections::{BTreeMap, HashMap};
+use std::fmt::Debug;
+
+use map_macro::{
+  btree_map, btree_map_e, btree_set, map, map_e, set, vec_no_clone,
+};
+
+#[derive(Debug)]
+struct Dyn1;
+
+#[derive(Debug)]
+struct Dyn2;
 
 #[test]
 fn map1() {
@@ -26,6 +37,24 @@ fn map2() {
   assert_eq!(m[&0], "a");
   assert_eq!(m[&1], "b");
   assert_eq!(m[&2], "c");
+}
+
+#[test]
+fn map_e1() {
+  let _: HashMap<&str, &dyn Debug> = map_e! {
+    "en" => &"Hello",
+    "de" => &"Hallo",
+    "fr" => &"Bonjour",
+    "es" => &"Hola",
+  };
+}
+
+#[test]
+fn map_e2() {
+  let _: HashMap<&str, &dyn Debug> = map_e! {
+    "1" => &Dyn1,
+    "2" => &Dyn2,
+  };
 }
 
 #[test]
@@ -82,6 +111,23 @@ fn btree_map2() {
   assert_eq!(m[&0], "a");
   assert_eq!(m[&1], "b");
   assert_eq!(m[&2], "c");
+}
+
+#[test]
+fn btree_map_e1() {
+  let _: BTreeMap<u8, &dyn Debug> = btree_map_e! {
+    0 => &"a",
+    1 => &"b",
+    2 => &"c",
+  };
+}
+
+#[test]
+fn btree_map_e2() {
+  let _: BTreeMap<&str, &dyn Debug> = btree_map_e! {
+    "1" => &Dyn1,
+    "2" => &Dyn2,
+  };
 }
 
 #[test]
