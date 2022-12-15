@@ -41,20 +41,20 @@ fn map2() {
 
 #[test]
 fn map_e1() {
-  let _: HashMap<&str, &dyn Debug> = map_e! {
+  drop::<HashMap<&str, &dyn Debug>>(map_e! {
     "en" => &"Hello",
     "de" => &"Hallo",
     "fr" => &"Bonjour",
     "es" => &"Hola",
-  };
+  });
 }
 
 #[test]
 fn map_e2() {
-  let _: HashMap<&str, &dyn Debug> = map_e! {
+  drop::<HashMap<&str, &dyn Debug>>(map_e! {
     "1" => &Dyn1,
     "2" => &Dyn2,
-  };
+  });
 }
 
 #[test]
@@ -115,19 +115,19 @@ fn btree_map2() {
 
 #[test]
 fn btree_map_e1() {
-  let _: BTreeMap<u8, &dyn Debug> = btree_map_e! {
+  drop::<BTreeMap<u8, &dyn Debug>>(btree_map_e! {
     0 => &"a",
     1 => &"b",
     2 => &"c",
-  };
+  });
 }
 
 #[test]
 fn btree_map_e2() {
-  let _: BTreeMap<&str, &dyn Debug> = btree_map_e! {
+  drop::<BTreeMap<&str, &dyn Debug>>(btree_map_e! {
     "1" => &Dyn1,
     "2" => &Dyn2,
-  };
+  });
 }
 
 #[test]

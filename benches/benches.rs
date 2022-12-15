@@ -50,8 +50,8 @@ fn bench_map_allocation(c: &mut Criterion) {
           }
         },
         COUNT,
-      ))
-    })
+      ));
+    });
   });
 }
 
@@ -91,8 +91,8 @@ fn bench_set_allocation(c: &mut Criterion) {
           }
         },
         COUNT,
-      ))
-    })
+      ));
+    });
   });
 }
 
@@ -109,8 +109,8 @@ fn bench_vec_no_clone_allocation(c: &mut Criterion) {
           ]
         },
         COUNT,
-      ))
-    })
+      ));
+    });
   });
 }
 
