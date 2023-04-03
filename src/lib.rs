@@ -21,23 +21,8 @@
 ///
 #[macro_export]
 macro_rules! map {
-  (@to_unit $($_:tt)*) => (());
-  (@count $($tail:expr),*) => (
-    <[()]>::len(&[$(map!(@to_unit $tail)),*])
-  );
-
   {$($k: expr => $v: expr),* $(,)?} => {
-    {
-      let mut map = std::collections::HashMap::with_capacity(
-        map!(@count $($k),*),
-      );
-
-      $(
-        map.insert($k, $v);
-      )*
-
-      map
-    }
+      std::collections::HashMap::from([$(($k, $v),)*])
   };
 }
 
@@ -66,23 +51,8 @@ macro_rules! map {
 ///
 #[macro_export]
 macro_rules! map_e {
-  (@to_unit $($_:tt)*) => (());
-  (@count $($tail:expr),*) => (
-    <[()]>::len(&[$(map_e!(@to_unit $tail)),*])
-  );
-
   {$($k: expr => $v: expr),* $(,)?} => {
-    {
-      let mut map = std::collections::HashMap::with_capacity(
-        map_e!(@count $($k),*),
-      );
-
-      $(
-        map.insert($k, $v as _);
-      )*
-
-      map
-    }
+      std::collections::HashMap::from([$(($k, $v as _),)*])
   };
 }
 
@@ -109,15 +79,7 @@ macro_rules! map_e {
 #[macro_export]
 macro_rules! btree_map {
   {$($k: expr => $v: expr),* $(,)?} => {
-    {
-      let mut map = std::collections::BTreeMap::new();
-
-      $(
-        map.insert($k, $v);
-      )*
-
-      map
-    }
+    std::collections::BTreeMap::from([$(($k, $v),)*])
   };
 }
 
@@ -145,15 +107,7 @@ macro_rules! btree_map {
 #[macro_export]
 macro_rules! btree_map_e {
   {$($k: expr => $v: expr),* $(,)?} => {
-    {
-      let mut map = std::collections::BTreeMap::new();
-
-      $(
-        map.insert($k, $v as _);
-      )*
-
-      map
-    }
+    std::collections::BTreeMap::from([$(($k, $v as _),)*])
   };
 }
 
@@ -175,23 +129,8 @@ macro_rules! btree_map_e {
 ///
 #[macro_export]
 macro_rules! set {
-  (@to_unit $($_:tt)*) => (());
-  (@count $($tail:expr),*) => (
-    <[()]>::len(&[$(set!(@to_unit $tail)),*])
-  );
-
   {$($v: expr),* $(,)?} => {
-    {
-      let mut set = std::collections::HashSet::with_capacity(
-        set!(@count $($v),*),
-      );
-
-      $(
-        set.insert($v);
-      )*
-
-      set
-    }
+      std::collections::HashSet::from([$($v,)*])
   };
 }
 
@@ -215,15 +154,7 @@ macro_rules! set {
 #[macro_export]
 macro_rules! btree_set {
   {$($v: expr),* $(,)?} => {
-    {
-      let mut set = std::collections::BTreeSet::new();
-
-      $(
-        set.insert($v);
-      )*
-
-      set
-    }
+    std::collections::BTreeSet::from([$($v,)*])
   };
 }
 
