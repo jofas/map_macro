@@ -21,9 +21,9 @@
 ///
 #[macro_export]
 macro_rules! map {
-  {$($k: expr => $v: expr),* $(,)?} => {
-      std::collections::HashMap::from([$(($k, $v),)*])
-  };
+    {$($k: expr => $v: expr),* $(,)?} => {
+        std::collections::HashMap::from([$(($k, $v),)*])
+    };
 }
 
 /// Explicitly typed equivalent of [`map!`].
@@ -51,9 +51,9 @@ macro_rules! map {
 ///
 #[macro_export]
 macro_rules! map_e {
-  {$($k: expr => $v: expr),* $(,)?} => {
-      std::collections::HashMap::from([$(($k, $v as _),)*])
-  };
+    {$($k: expr => $v: expr),* $(,)?} => {
+        std::collections::HashMap::from([$(($k, $v as _),)*])
+    };
 }
 
 /// Macro for creating a [map](std::collections::BTreeMap) based on
@@ -78,9 +78,9 @@ macro_rules! map_e {
 ///
 #[macro_export]
 macro_rules! btree_map {
-  {$($k: expr => $v: expr),* $(,)?} => {
-    std::collections::BTreeMap::from([$(($k, $v),)*])
-  };
+    {$($k: expr => $v: expr),* $(,)?} => {
+        std::collections::BTreeMap::from([$(($k, $v),)*])
+    };
 }
 
 /// Explicitly typed equivalent of [`btree_map!`].
@@ -106,9 +106,9 @@ macro_rules! btree_map {
 ///
 #[macro_export]
 macro_rules! btree_map_e {
-  {$($k: expr => $v: expr),* $(,)?} => {
-    std::collections::BTreeMap::from([$(($k, $v as _),)*])
-  };
+    {$($k: expr => $v: expr),* $(,)?} => {
+        std::collections::BTreeMap::from([$(($k, $v as _),)*])
+    };
 }
 
 /// Macro for creating a [set](std::collections::HashSet).
@@ -129,9 +129,9 @@ macro_rules! btree_map_e {
 ///
 #[macro_export]
 macro_rules! set {
-  {$($v: expr),* $(,)?} => {
-      std::collections::HashSet::from([$($v,)*])
-  };
+    {$($v: expr),* $(,)?} => {
+        std::collections::HashSet::from([$($v,)*])
+    };
 }
 
 /// Macro for creating a [set](std::collections::BTreeSet) based on
@@ -153,9 +153,9 @@ macro_rules! set {
 ///
 #[macro_export]
 macro_rules! btree_set {
-  {$($v: expr),* $(,)?} => {
-    std::collections::BTreeSet::from([$($v,)*])
-  };
+    {$($v: expr),* $(,)?} => {
+        std::collections::BTreeSet::from([$($v,)*])
+    };
 }
 
 /// More flexible version of the [vec!] macro.
@@ -179,20 +179,20 @@ macro_rules! btree_set {
 ///
 #[macro_export]
 macro_rules! vec_no_clone {
-  {$v: expr; $c: expr} => {
-    {
-      let mut vec = Vec::with_capacity($c);
+    {$v: expr; $c: expr} => {
+        {
+            let mut vec = Vec::with_capacity($c);
 
-      for _ in 0..$c {
-        vec.push($v);
-      }
+            for _ in 0..$c {
+                vec.push($v);
+            }
 
-      vec
-    }
-  };
-  {$($v: expr),* $(,)?} => {
-    {
-      vec![$($v),*]
-    }
-  };
+            vec
+        }
+    };
+    {$($v: expr),* $(,)?} => {
+        {
+            vec![$($v),*]
+        }
+    };
 }
