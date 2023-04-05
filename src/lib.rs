@@ -12,10 +12,10 @@
 /// use map_macro::map;
 ///
 /// let goodbye = map! {
-///   "en" => "Goodbye",
-///   "de" => "Auf Wiedersehen",
-///   "fr" => "Au revoir",
-///   "es" => "Adios",
+///     "en" => "Goodbye",
+///     "de" => "Auf Wiedersehen",
+///     "fr" => "Au revoir",
+///     "es" => "Adios",
 /// };
 /// ```
 ///
@@ -40,10 +40,10 @@ macro_rules! map {
 /// use map_macro::map_e;
 ///
 /// let goodbye: HashMap<&str, &dyn Debug> = map_e! {
-///   "en" => &"Goodbye",
-///   "de" => &"Auf Wiedersehen",
-///   "fr" => &"Au revoir",
-///   "es" => &"Adios",
+///     "en" => &"Goodbye",
+///     "de" => &"Auf Wiedersehen",
+///     "fr" => &"Au revoir",
+///     "es" => &"Adios",
 /// };
 ///
 /// println!("{:?}", goodbye);
@@ -69,10 +69,10 @@ macro_rules! map_e {
 /// use map_macro::btree_map;
 ///
 /// let goodbye = btree_map! {
-///   "en" => "Goodbye",
-///   "de" => "Auf Wiedersehen",
-///   "fr" => "Au revoir",
-///   "es" => "Adios",
+///     "en" => "Goodbye",
+///     "de" => "Auf Wiedersehen",
+///     "fr" => "Au revoir",
+///     "es" => "Adios",
 /// };
 /// ```
 ///
@@ -97,10 +97,10 @@ macro_rules! btree_map {
 /// use map_macro::btree_map_e;
 ///
 /// let goodbye: BTreeMap<&str, &dyn Debug> = btree_map_e! {
-///   "en" => &"Goodbye",
-///   "de" => &"Auf Wiedersehen",
-///   "fr" => &"Au revoir",
-///   "es" => &"Adios",
+///     "en" => &"Goodbye",
+///     "de" => &"Auf Wiedersehen",
+///     "fr" => &"Au revoir",
+///     "es" => &"Adios",
 /// };
 /// ```
 ///

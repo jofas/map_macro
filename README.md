@@ -44,10 +44,10 @@ following code:
 
 ```python
 hello = {
-  "en": "Hello",
-  "de": "Hallo",
-  "fr": "Bonjour",
-  "es": "Hola",
+    "en": "Hello",
+    "de": "Hallo",
+    "fr": "Bonjour",
+    "es": "Hola",
 }
 ```
 
@@ -76,10 +76,10 @@ to:
 use map_macro::map;
 
 let hello = map! {
-  "en" => "Hello",
-  "de" => "Hallo",
-  "fr" => "Bonjour",
-  "es" => "Hola",
+    "en" => "Hello",
+    "de" => "Hallo",
+    "fr" => "Bonjour",
+    "es" => "Hola",
 };
 ```
 
@@ -94,18 +94,18 @@ keys and values as well, you are not limited to literals:
 use map_macro::map;
 
 fn hello_in_french() -> &'static str {
-  "Bonjour"
+    "Bonjour"
 }
 
 fn spanish_language_code() -> &'static str {
-  "es"
+    "es"
 }
 
 let hello = map! {
-  "en" => "Hello",
-  "de" => "Hallo",
-  "fr" => hello_in_french(),
-  spanish_language_code() => "Hola",
+    "en" => "Hello",
+    "de" => "Hallo",
+    "fr" => hello_in_french(),
+    spanish_language_code() => "Hola",
 };
 ```
 
@@ -126,10 +126,10 @@ use std::fmt::Debug;
 use map_macro::map;
 
 let hello: HashMap<&str, &dyn Debug> = map! {
-  "en" => &"Hello",
-  "de" => &"Hallo",
-  "fr" => &"Bonjour",
-  "es" => &"Hola",
+    "en" => &"Hello",
+    "de" => &"Hallo",
+    "fr" => &"Bonjour",
+    "es" => &"Hola",
 };
 ```
 
@@ -144,10 +144,10 @@ use std::fmt::Debug;
 use map_macro::map_e;
 
 let hello: HashMap<&str, &dyn Debug> = map_e! {
-  "en" => &"Hello",
-  "de" => &"Hallo",
-  "fr" => &"Bonjour",
-  "es" => &"Hola",
+    "en" => &"Hello",
+    "de" => &"Hallo",
+    "fr" => &"Bonjour",
+    "es" => &"Hola",
 };
 ```
 
@@ -169,10 +169,10 @@ use std::fmt::Debug;
 use map_macro::btree_map_e;
 
 let hello: BTreeMap<&str, &dyn Debug> = btree_map_e! {
-  "en" => &"Hello",
-  "de" => &"Hallo",
-  "fr" => &"Bonjour",
-  "es" => &"Hola",
+    "en" => &"Hello",
+    "de" => &"Hallo",
+    "fr" => &"Bonjour",
+    "es" => &"Hola",
 };
 ```
 
@@ -253,10 +253,10 @@ They work exactly like the `map!` and `set!` macros:
 use map_macro::{btree_map, btree_set};
 
 let hello = btree_map! {
-  "en" => "Hello",
-  "de" => "Hallo",
-  "fr" => "Bonjour",
-  "es" => "Hola",
+    "en" => "Hello",
+    "de" => "Hallo",
+    "fr" => "Bonjour",
+    "es" => "Hola",
 };
 
 assert_eq!(hello["en"], "Hello");
@@ -314,8 +314,8 @@ vector:
 struct UnclonableWrapper(u8);
 
 let x: Vec<UnclonableWrapper> = (0..5)
-  .map(|_| UnclonableWrapper(0))
-  .collect();
+    .map(|_| UnclonableWrapper(0))
+    .collect();
 
 assert_eq!(x.len(), 5);
 ```
@@ -338,8 +338,8 @@ use std::rc::Rc;
 // is not the first
 let shared_vec = vec![Rc::new(RefCell::new(0)); 2];
 {
-  let mut first = shared_vec[0].borrow_mut();
-  *first += 1;
+    let mut first = shared_vec[0].borrow_mut();
+    *first += 1;
 }
 
 assert_eq!(*shared_vec[0].borrow(), 1);
@@ -356,8 +356,8 @@ assert_eq!(*shared_vec[1].borrow(), 1);
 let unshared_vec = vec_no_clone![Rc::new(RefCell::new(0)); 2];
 
 {
-  let mut first = unshared_vec[0].borrow_mut();
-  *first += 1;
+    let mut first = unshared_vec[0].borrow_mut();
+    *first += 1;
 }
 
 assert_eq!(*unshared_vec[0].borrow(), 1);
