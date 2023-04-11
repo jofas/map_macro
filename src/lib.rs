@@ -158,6 +158,49 @@ macro_rules! btree_set {
     };
 }
 
+#[macro_export]
+macro_rules! vec_deque {
+    {$v: expr; $c: expr} => {
+        {
+            let mut vec = std::collections::VecDeque::with_capacity($c);
+
+            for _ in 0..$c {
+                vec.push($v);
+            }
+
+            vec
+        }
+    };
+    {$($v: expr),* $(,)?} => {
+        std::collections::VecDeque::from([$($v,)*])
+    };
+}
+
+#[macro_export]
+macro_rules! vec_deque_e {
+    {$v: expr; $c: expr} => {
+        {
+            let mut vec = std::collections::VecDeque::with_capacity($c);
+
+            for _ in 0..$c {
+                vec.push($v as _);
+            }
+
+            vec
+        }
+    };
+    {$($v: expr),* $(,)?} => {
+        std::collections::VecDeque::from([$($v as _,)*])
+    };
+}
+
+// TODO:
+//
+// * test vec_deque macros
+// * document vec_deque macros
+// * linked_list (with [Elem;Count] + e)
+// * binary_heap (with [Elem;Count])
+
 /// More flexible version of the [vec!] macro.
 ///
 /// See this [crate's](crate) documentation for a description and more
