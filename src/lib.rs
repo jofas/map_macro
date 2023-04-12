@@ -158,6 +158,19 @@ macro_rules! btree_set {
     };
 }
 
+/// Macro for creating a [`VecDeque`](std::collections::VecDeque).
+///
+/// Follows the same syntax as the [`vec!`] macro.
+///
+/// # Examples
+///
+/// ```
+/// use map_macro::vec_deque;
+///
+/// let v = vec_deque![0, 1, 2, 3];
+/// let v = vec_deque![0; 4];
+/// ```
+///
 #[macro_export]
 macro_rules! vec_deque {
     {$v: expr; $c: expr} => {
@@ -176,6 +189,23 @@ macro_rules! vec_deque {
     };
 }
 
+/// Explicitly typed equivalent of [`vec_deque!`].
+///
+/// See this [crate's](crate) documentation for what explicitly typed
+/// means in the context of this crate.
+///
+/// # Examples
+///
+/// ```
+/// use std::collections::VecDeque;
+/// use std::fmt::Debug;
+///
+/// use map_macro::vec_deque_e;
+///
+/// let v: VecDeque<&dyn Debug> = vec_deque_e![&0, &1, &2, &3];
+/// let v: VecDeque<&dyn Debug> = vec_deque_e![&0; 4];
+/// ```
+///
 #[macro_export]
 macro_rules! vec_deque_e {
     {$v: expr; $c: expr} => {
@@ -196,7 +226,6 @@ macro_rules! vec_deque_e {
 
 // TODO:
 //
-// * document vec_deque macros
 // * linked_list (with [Elem;Count] + e)
 // * binary_heap (with [Elem;Count])
 

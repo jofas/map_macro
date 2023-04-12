@@ -32,6 +32,11 @@ fn vec_deque2() {
 }
 
 #[test]
+fn vec_deque_empty() {
+    drop::<VecDeque<u8>>(vec_deque![]);
+}
+
+#[test]
 fn vec_deque_e1() {
     drop::<VecDeque<&dyn Debug>>(vec_deque_e![&0, &"Hello"]);
 }
