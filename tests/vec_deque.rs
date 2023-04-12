@@ -11,7 +11,7 @@ struct Dyn2;
 
 #[test]
 fn vec_deque1() {
-    let v = vec_deque![0, 1, 2, 3];
+    let v: VecDeque<u8> = vec_deque![0, 1, 2, 3];
 
     assert_eq!(v[0], 0);
     assert_eq!(v[1], 1);
@@ -21,7 +21,7 @@ fn vec_deque1() {
 
 #[test]
 fn vec_deque2() {
-    let v = vec_deque![0; 4];
+    let v: VecDeque<u8> = vec_deque![0; 4];
 
     assert_eq!(v.len(), 4);
 

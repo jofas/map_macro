@@ -224,10 +224,77 @@ macro_rules! vec_deque_e {
     };
 }
 
+/// Macro for creating a [`LinkedList`](std::collections::LinkedList).
+///
+/// Follows the same syntax as the [`vec!`] macro.
+///
+/// # Examples
+///
+/// ```
+/// use map_macro::linked_list;
+///
+/// let v = linked_list![0, 1, 2, 3];
+/// let v = linked_list![0; 4];
+/// ```
+///
+#[macro_export]
+macro_rules! linked_list {
+    {$v: expr; $c: expr} => {
+        {
+            let mut ll = std::collections::LinkedList::new();
+
+            for _ in 0..$c {
+                ll.push_back($v);
+            }
+
+            ll
+        }
+    };
+    {$($v: expr),* $(,)?} => {
+        std::collections::LinkedList::from([$($v,)*])
+    };
+}
+
+/// Explicitly typed equivalent of [`linked_list!`].
+///
+/// See this [crate's](crate) documentation for what explicitly typed
+/// means in the context of this crate.
+///
+/// # Examples
+///
+/// ```
+/// use std::collections::LinkedList;
+/// use std::fmt::Debug;
+///
+/// use map_macro::linked_list_e;
+///
+/// let v: LinkedList<&dyn Debug> = linked_list_e![&0, &1, &2, &3];
+/// let v: LinkedList<&dyn Debug> = linked_list_e![&0; 4];
+/// ```
+///
+#[macro_export]
+macro_rules! linked_list_e {
+    {$v: expr; $c: expr} => {
+        {
+            let mut ll = std::collections::LinkedList::new();
+
+            for _ in 0..$c {
+                ll.push_back($v as _);
+            }
+
+            ll
+        }
+    };
+    {$($v: expr),* $(,)?} => {
+        std::collections::LinkedList::from([$($v as _,)*])
+    };
+}
+
 // TODO:
 //
-// * linked_list (with [Elem;Count] + e)
 // * binary_heap (with [Elem;Count])
+// * test binary_heap
+// * document binary_heap
 
 /// More flexible version of the [vec!] macro.
 ///
