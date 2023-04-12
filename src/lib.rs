@@ -165,7 +165,7 @@ macro_rules! vec_deque {
             let mut vec = std::collections::VecDeque::with_capacity($c);
 
             for _ in 0..$c {
-                vec.push($v);
+                vec.push_back($v);
             }
 
             vec
@@ -183,7 +183,7 @@ macro_rules! vec_deque_e {
             let mut vec = std::collections::VecDeque::with_capacity($c);
 
             for _ in 0..$c {
-                vec.push($v as _);
+                vec.push_back($v as _);
             }
 
             vec
@@ -196,7 +196,6 @@ macro_rules! vec_deque_e {
 
 // TODO:
 //
-// * test vec_deque macros
 // * document vec_deque macros
 // * linked_list (with [Elem;Count] + e)
 // * binary_heap (with [Elem;Count])
