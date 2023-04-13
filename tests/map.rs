@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::fmt::Debug;
 
-use map_macro::{map, map_e};
+use map_macro::{hash_map, hash_map_e};
 
 #[derive(Debug)]
 struct Dyn1;
@@ -10,8 +10,8 @@ struct Dyn1;
 struct Dyn2;
 
 #[test]
-fn map1() {
-    let m = map! {
+fn hash_map1() {
+    let m = hash_map! {
         "en" => "Hello",
         "de" => "Hallo",
         "fr" => "Bonjour",
@@ -25,8 +25,8 @@ fn map1() {
 }
 
 #[test]
-fn map2() {
-    let m = map! {
+fn hash_map2() {
+    let m = hash_map! {
         0 => "a",
         1 => "b",
         2 => "c",
@@ -38,8 +38,8 @@ fn map2() {
 }
 
 #[test]
-fn map_e1() {
-    drop::<HashMap<&str, &dyn Debug>>(map_e! {
+fn hash_map_e1() {
+    drop::<HashMap<&str, &dyn Debug>>(hash_map_e! {
         "en" => &"Hello",
         "de" => &"Hallo",
         "fr" => &"Bonjour",
@@ -48,8 +48,8 @@ fn map_e1() {
 }
 
 #[test]
-fn map_e2() {
-    drop::<HashMap<&str, &dyn Debug>>(map_e! {
+fn hash_map_e2() {
+    drop::<HashMap<&str, &dyn Debug>>(hash_map_e! {
         "1" => &Dyn1,
         "2" => &Dyn2,
     });

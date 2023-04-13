@@ -1,6 +1,6 @@
 #![cfg(not(tarpaulin_include))]
 
-use map_macro::{map, set, vec_no_clone};
+use map_macro::{hash_map, hash_set, vec_no_clone};
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
@@ -18,7 +18,7 @@ fn bench_map_allocation(c: &mut Criterion) {
         b.iter(|| {
             black_box(reapeat(
                 || {
-                    map! {
+                    hash_map! {
                         0 => "a",
                         1 => "b",
                         2 => "c",
@@ -59,7 +59,7 @@ fn bench_set_allocation(c: &mut Criterion) {
         b.iter(|| {
             black_box(reapeat(
                 || {
-                    set! {
+                    hash_set! {
                         "a",
                         "b",
                         "c",
@@ -100,10 +100,7 @@ fn bench_vec_no_clone_allocation(c: &mut Criterion) {
         b.iter(|| {
             black_box(reapeat(
                 || {
-                    vec_no_clone![
-                        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
-                        "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-                    ]
+                    vec_no_clone![0; 2_000];
                 },
                 COUNT,
             ));
