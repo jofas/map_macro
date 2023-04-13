@@ -290,11 +290,36 @@ macro_rules! linked_list_e {
     };
 }
 
-// TODO:
-//
-// * binary_heap (with [Elem;Count])
-// * test binary_heap
-// * document binary_heap
+/// Macro for creating a [`BinaryHeap`](std::collections::BinaryHeap).
+///
+/// Follows the same syntax as the [`vec!`] macro.
+///
+/// # Examples
+///
+/// ```
+/// use map_macro::binary_heap;
+///
+/// let v = binary_heap![0, 1, 2, 3];
+/// let v = binary_heap![0; 4];
+/// ```
+///
+#[macro_export]
+macro_rules! binary_heap {
+    {$v: expr; $c: expr} => {
+        {
+            let mut bh = std::collections::BinaryHeap::with_capacity($c);
+
+            for _ in 0..$c {
+                bh.push($v);
+            }
+
+            bh
+        }
+    };
+    {$($v: expr),* $(,)?} => {
+        std::collections::BinaryHeap::from([$($v,)*])
+    };
+}
 
 /// More flexible version of the [vec!] macro.
 ///
