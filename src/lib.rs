@@ -1,6 +1,6 @@
 #![ doc = include_str!("../README.md")]
 
-/// Macro for creating a [map](std::collections::HashMap).
+/// Macro for creating a [`HashMap`](std::collections::HashMap).
 ///
 /// Equivalent to the [vec!] macro for [vectors](std::vec::Vec).
 /// Set this [crate's](crate) documentation for more examples on how
@@ -9,9 +9,9 @@
 /// **Example:**
 ///
 /// ```rust
-/// use map_macro::map;
+/// use map_macro::hash_map;
 ///
-/// let goodbye = map! {
+/// let goodbye = hash_map! {
 ///     "en" => "Goodbye",
 ///     "de" => "Auf Wiedersehen",
 ///     "fr" => "Au revoir",
@@ -20,13 +20,13 @@
 /// ```
 ///
 #[macro_export]
-macro_rules! map {
+macro_rules! hash_map {
     {$($k: expr => $v: expr),* $(,)?} => {
         std::collections::HashMap::from([$(($k, $v),)*])
     };
 }
 
-/// Explicitly typed equivalent of [`map!`].
+/// Explicitly typed equivalent of [`hash_map!`].
 ///
 /// Set this [crate's](crate) documentation for more examples on how
 /// to use this macro.
@@ -37,9 +37,9 @@ macro_rules! map {
 /// use std::collections::HashMap;
 /// use std::fmt::Debug;
 ///
-/// use map_macro::map_e;
+/// use map_macro::hash_map_e;
 ///
-/// let goodbye: HashMap<&str, &dyn Debug> = map_e! {
+/// let goodbye: HashMap<&str, &dyn Debug> = hash_map_e! {
 ///     "en" => &"Goodbye",
 ///     "de" => &"Auf Wiedersehen",
 ///     "fr" => &"Au revoir",
@@ -50,7 +50,7 @@ macro_rules! map {
 /// ```
 ///
 #[macro_export]
-macro_rules! map_e {
+macro_rules! hash_map_e {
     {$($k: expr => $v: expr),* $(,)?} => {
         std::collections::HashMap::from([$(($k, $v as _),)*])
     };
@@ -111,7 +111,7 @@ macro_rules! btree_map_e {
     };
 }
 
-/// Macro for creating a [set](std::collections::HashSet).
+/// Macro for creating a [`HashSet`](std::collections::HashSet).
 ///
 /// Equivalent to the [vec!] macro for [vectors](std::vec::Vec).
 /// Set this [crate's](crate) documentation for more examples on how
@@ -120,15 +120,15 @@ macro_rules! btree_map_e {
 /// **Example:**
 ///
 /// ```rust
-/// use map_macro::set;
+/// use map_macro::hash_set;
 ///
-/// let x = set! { 1, 2, 3, 3, 4 };
+/// let x = hash_set! { 1, 2, 3, 3, 4 };
 ///
 /// assert_eq!(x.len(), 4);
 /// ```
 ///
 #[macro_export]
-macro_rules! set {
+macro_rules! hash_set {
     {$($v: expr),* $(,)?} => {
         std::collections::HashSet::from([$($v,)*])
     };

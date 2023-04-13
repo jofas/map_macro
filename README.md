@@ -73,9 +73,9 @@ Creating the same `hello` map from the example above can be simplified
 to:
 
 ```rust
-use map_macro::map;
+use map_macro::hash_map;
 
-let hello = map! {
+let hello = hash_map! {
     "en" => "Hello",
     "de" => "Hallo",
     "fr" => "Bonjour",
@@ -91,7 +91,7 @@ The `map!` macro is powerful enough to create maps from non-static
 keys and values as well, you are not limited to literals:
 
 ```rust
-use map_macro::map;
+use map_macro::hash_map;
 
 fn hello_in_french() -> &'static str {
     "Bonjour"
@@ -101,7 +101,7 @@ fn spanish_language_code() -> &'static str {
     "es"
 }
 
-let hello = map! {
+let hello = hash_map! {
     "en" => "Hello",
     "de" => "Hallo",
     "fr" => hello_in_french(),
@@ -123,9 +123,9 @@ right type when creating `hello`:
 use std::collections::HashMap;
 use std::fmt::Debug;
 
-use map_macro::map;
+use map_macro::hash_map;
 
-let hello: HashMap<&str, &dyn Debug> = map! {
+let hello: HashMap<&str, &dyn Debug> = hash_map! {
     "en" => &"Hello",
     "de" => &"Hallo",
     "fr" => &"Bonjour",
@@ -141,9 +141,9 @@ successfully:
 use std::collections::HashMap;
 use std::fmt::Debug;
 
-use map_macro::map_e;
+use map_macro::hash_map_e;
 
-let hello: HashMap<&str, &dyn Debug> = map_e! {
+let hello: HashMap<&str, &dyn Debug> = hash_map_e! {
     "en" => &"Hello",
     "de" => &"Hallo",
     "fr" => &"Bonjour",
@@ -210,9 +210,9 @@ The `set!` macro provided by the `map-macro` crate lets you write the
 same code as:
 
 ```
-use map_macro::set;
+use map_macro::hash_set;
 
-let x = set! { 1, 2, 3 };
+let x = hash_set! { 1, 2, 3 };
 ```
 
 Again, nearly as neat as dart!
@@ -220,20 +220,20 @@ Again, nearly as neat as dart!
 The `set!` macro is as powerful as the `map!` macro:
 
 ```rust
-use map_macro::set;
+use map_macro::hash_set;
 
 fn one() -> i32 {
   1
 }
 
-let x = set! { one(), 2, 3 };
+let x = hash_set! { one(), 2, 3 };
 ```
 
 ```rust
 use std::collections::HashSet;
-use map_macro::set;
+use map_macro::hash_set;
 
-let x: HashSet<i32> = set! {};
+let x: HashSet<i32> = hash_set! {};
 
 assert_eq!(x.len(), 0);
 ```
