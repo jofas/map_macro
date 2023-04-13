@@ -1,3 +1,5 @@
+#![allow(deprecated)]
+
 use map_macro::set;
 
 #[test]
