@@ -26,6 +26,16 @@ macro_rules! hash_map {
     };
 }
 
+/// Deprecated. Use [`hash_map!`] instead.
+///
+#[deprecated = "deprecated in favour of `hash_map!`. Will be removed in `map-macro v0.3.0`"]
+#[macro_export]
+macro_rules! map {
+    {$($k: expr => $v: expr),* $(,)?} => {
+        std::collections::HashMap::from([$(($k, $v),)*])
+    };
+}
+
 /// Explicitly typed equivalent of [`hash_map!`].
 ///
 /// Set this [crate's](crate) documentation for more examples on how
@@ -51,6 +61,16 @@ macro_rules! hash_map {
 ///
 #[macro_export]
 macro_rules! hash_map_e {
+    {$($k: expr => $v: expr),* $(,)?} => {
+        std::collections::HashMap::from([$(($k, $v as _),)*])
+    };
+}
+
+/// Deprecated. Use [`hash_map_e!`] instead.
+///
+#[deprecated = "deprecated in favour of `hash_map_e!`. Will be removed in `map-macro v0.3.0`"]
+#[macro_export]
+macro_rules! map_e {
     {$($k: expr => $v: expr),* $(,)?} => {
         std::collections::HashMap::from([$(($k, $v as _),)*])
     };
@@ -129,6 +149,16 @@ macro_rules! btree_map_e {
 ///
 #[macro_export]
 macro_rules! hash_set {
+    {$($v: expr),* $(,)?} => {
+        std::collections::HashSet::from([$($v,)*])
+    };
+}
+
+/// Deprecated. Use [`hash_set!`] instead.
+///
+#[deprecated = "deprecated in favour of `hash_set!`. Will be removed in `map-macro v0.3.0`"]
+#[macro_export]
+macro_rules! set {
     {$($v: expr),* $(,)?} => {
         std::collections::HashSet::from([$($v,)*])
     };
