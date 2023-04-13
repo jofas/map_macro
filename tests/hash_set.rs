@@ -1,10 +1,8 @@
-#![allow(deprecated)]
-
-use map_macro::set;
+use map_macro::hash_set;
 
 #[test]
-fn set1() {
-    let s = set! { "a", "b", "c", "d" };
+fn hash_set1() {
+    let s = hash_set! { "a", "b", "c", "d" };
 
     assert_eq!(s.len(), 4);
 
@@ -17,8 +15,8 @@ fn set1() {
 }
 
 #[test]
-fn set2() {
-    let s = set! { 0, 1, 2, 3, 0 };
+fn hash_set2() {
+    let s = hash_set! { 0, 1, 2, 3, 0 };
 
     assert_eq!(s.len(), 4);
 
