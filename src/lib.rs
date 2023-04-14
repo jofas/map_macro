@@ -333,23 +333,139 @@ macro_rules! binary_heap {
     };
 }
 
-/// More flexible version of the [vec!] macro.
+/// Version of the [`vec!`] macro where the value does not have to implement [`Clone`].
 ///
-/// See this [crate's](crate) documentation for a description and more
-/// examples on how to use this macro.
+/// When using `vec![x; count]`, the type of `x` has to implement `Clone`, because
+/// `x` is cloned `count - 1` times into all the vector elements, except the first one.
+/// This could either be undesired behavior in case `x` implements `Clone` in a way that
+/// doesn't fit your needs or `x` is not cloneable at all.
 ///
-/// **Example:**
+/// # Uncloneable Types
+///
+/// For example, this will result in a panic during compile time:
+///
+/// ```compile_fail
+/// struct UnclonableWrapper(u8);
+///
+/// let x = vec![UnclonableWrapper(0); 5];
+/// ```
+///
+/// The `vec_no_clone!` macro takes a different approach.
+/// Instead of cloning `UnclonableWrapper(0)`, it treats it as an
+/// [expression](https://doc.rust-lang.org/reference/expressions.html) which is
+/// called 5 times in this case.
+/// So 5 independent `UnclonableWrapper` objects, each with its own location in
+/// memory, are created:
 ///
 /// ```rust
 /// use map_macro::vec_no_clone;
 ///
 /// struct UnclonableWrapper(u8);
 ///
-/// // the `vec!` macro from the standard library would panic at this
-/// // call
-/// let x = vec_no_clone![UnclonableWrapper(0); 10];
+/// let x = vec_no_clone![UnclonableWrapper(0); 5];
 ///
-/// assert_eq!(x.len(), 10);
+/// assert_eq!(x.len(), 5);
+/// ```
+///
+/// A real-world example where `vec_no_clone!` is a useful drop-in replacement
+/// for `vec!` are [atomic types](std::sync::atomic), which are not clonable:
+///
+/// ```rust
+/// use std::sync::atomic::AtomicU8;
+///
+/// use map_macro::vec_no_clone;
+///
+/// let x = vec_no_clone![AtomicU8::new(0); 5];
+///
+/// assert_eq!(x.len(), 5);
+/// ```
+///
+/// # Types where `Clone` exerts the wrong Behaviour
+///
+/// `vec_no_clone!` is not only useful for unclonable types, but also for types
+/// where cloning them is not what you want.
+/// The best example would be a reference counted pointer [`Rc`](std::rc::Rc).
+/// When you clone a `Rc`, a new instance referencing the same location in memory
+/// is created.
+/// If you'd rather have multiple independent reference counted pointers to
+/// different memory locations, you can use `vec_no_clone!` as well:
+///
+/// ```rust
+/// use map_macro::vec_no_clone;
+///
+/// use std::cell::RefCell;
+/// use std::rc::Rc;
+///
+/// // simply clones the reference counted pointer for each element that
+/// // is not the first
+/// let shared_vec = vec![Rc::new(RefCell::new(0)); 2];
+/// {
+///     let mut first = shared_vec[0].borrow_mut();
+///     *first += 1;
+/// }
+///
+/// assert_eq!(*shared_vec[0].borrow(), 1);
+///
+/// // the second element is a clone of the reference counted pointer at
+/// // the first element of the vector, referencing the same address in
+/// // memory, therefore being mutated as well
+/// assert_eq!(*shared_vec[1].borrow(), 1);
+///
+/// // the `vec_no_clone!` macro does not clone the object created by the
+/// // first expression but instead calls the expression for each element
+/// // in the vector, creating two independent objects, each with their
+/// // own address in memory
+/// let unshared_vec = vec_no_clone![Rc::new(RefCell::new(0)); 2];
+///
+/// {
+///     let mut first = unshared_vec[0].borrow_mut();
+///     *first += 1;
+/// }
+///
+/// assert_eq!(*unshared_vec[0].borrow(), 1);
+///
+/// // the second element is not the same cloned reference counted
+/// // pointer as it would be if it were constructed with the `vec!` macro
+/// // from the standard library like it was above, therefore it is not
+/// // mutated
+/// assert_eq!(*unshared_vec[1].borrow(), 0);
+/// ```
+///
+/// # Drawbacks of using Expressions
+///
+/// Since `vec_no_clone!` treats the value as an expression, you must provide the
+/// initialization as input directly.
+/// This, for example, won't work:
+///
+/// ```compile_fail
+/// use map_macro::vec_no_clone;
+///
+/// struct UnclonableWrapper(u8);
+///
+/// let a = UnclonableWrapper(0);
+///
+/// // a will have moved into the first element of x, raising a compile
+/// // time error for the second element.
+/// let x = vec_no_clone![a; 5];
+/// ```
+///
+/// # Processing Lists of Elements
+///
+/// You can also use the macro with a list of elements, like `vec!`.
+/// In fact, `vec_no_clone!` falls back to `vec!` in this case:
+///
+/// ```rust
+/// use map_macro::vec_no_clone;
+///
+/// let v1 = vec_no_clone![0, 1, 2, 3];
+/// let v2 = vec![0, 1, 2, 3];
+///
+/// assert_eq!(v1, v2);
+///
+/// let v1: Vec<u8> = vec_no_clone![];
+/// let v2: Vec<u8> = vec![];
+///
+/// assert_eq!(v1, v2);
 /// ```
 ///
 #[macro_export]
