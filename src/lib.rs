@@ -2,11 +2,9 @@
 
 /// Macro for creating a [`HashMap`](std::collections::HashMap).
 ///
-/// Equivalent to the [vec!] macro for [vectors](std::vec::Vec).
-/// Set this [crate's](crate) documentation for more examples on how
-/// to use this macro.
+/// Syntactic sugar for [`HashMap::from`](std::collections::HashMap::from).
 ///
-/// **Example:**
+/// # Examples
 ///
 /// ```rust
 /// use map_macro::hash_map;
@@ -36,12 +34,10 @@ macro_rules! map {
     };
 }
 
-/// Explicitly typed equivalent of [`hash_map!`].
+/// Explicitly typed equivalent of [`hash_map!`], suitable for
+/// [trait object values](crate#explicitly-typed-values-for-trait-objects).
 ///
-/// Set this [crate's](crate) documentation for more examples on how
-/// to use this macro.
-///
-/// **Example:**
+/// # Examples
 ///
 /// ```rust
 /// use std::collections::HashMap;
@@ -76,14 +72,11 @@ macro_rules! map_e {
     };
 }
 
-/// Macro for creating a [map](std::collections::BTreeMap) based on
-/// a b-tree data structure.
+/// Macro for creating a [`BTreeMap`](std::collections::BTreeMap).
 ///
-/// Works just like the [map!] macro.
-/// Set this [crate's](crate) documentation for more examples on how
-/// to use this macro.
+/// Syntactic sugar for [`BTreeMap::from`](std::collections::BTreeMap::from).
 ///
-/// **Example:**
+/// # Examples
 ///
 /// ```rust
 /// use map_macro::btree_map;
@@ -103,12 +96,10 @@ macro_rules! btree_map {
     };
 }
 
-/// Explicitly typed equivalent of [`btree_map!`].
+/// Explicitly typed equivalent of [`btree_map!`], suitable for
+/// [trait object values](crate#explicitly-typed-values-for-trait-objects).
 ///
-/// Set this [crate's](crate) documentation for more examples on how
-/// to use this macro.
-///
-/// **Example:**
+/// # Examples
 ///
 /// ```rust
 /// use std::collections::BTreeMap;
@@ -133,11 +124,9 @@ macro_rules! btree_map_e {
 
 /// Macro for creating a [`HashSet`](std::collections::HashSet).
 ///
-/// Equivalent to the [vec!] macro for [vectors](std::vec::Vec).
-/// Set this [crate's](crate) documentation for more examples on how
-/// to use this macro.
+/// Syntactic sugar for [`HashSet::from`](std::collections::HashSet::from).
 ///
-/// **Example:**
+/// # Examples
 ///
 /// ```rust
 /// use map_macro::hash_set;
@@ -164,14 +153,11 @@ macro_rules! set {
     };
 }
 
-/// Macro for creating a [set](std::collections::BTreeSet) based on
-/// a b-tree data structure.
+/// Macro for creating a [`BTreeSet`](std::collections::BTreeSet).
 ///
-/// Works just like the [set!] macro.
-/// Set this [crate's](crate) documentation for more examples on how
-/// to use this macro.
+/// Syntactic sugar for [`BTreeSet::from`](std::collections::BTreeSet::from).
 ///
-/// **Example:**
+/// # Examples
 ///
 /// ```rust
 /// use map_macro::btree_set;
@@ -219,10 +205,8 @@ macro_rules! vec_deque {
     };
 }
 
-/// Explicitly typed equivalent of [`vec_deque!`].
-///
-/// See this [crate's](crate) documentation for what explicitly typed
-/// means in the context of this crate.
+/// Explicitly typed equivalent of [`vec_deque!`], suitable for
+/// [trait object values](crate#explicitly-typed-values-for-trait-objects).
 ///
 /// # Examples
 ///
@@ -285,10 +269,8 @@ macro_rules! linked_list {
     };
 }
 
-/// Explicitly typed equivalent of [`linked_list!`].
-///
-/// See this [crate's](crate) documentation for what explicitly typed
-/// means in the context of this crate.
+/// Explicitly typed equivalent of [`linked_list!`], suitable for
+/// [trait object values](crate#explicitly-typed-values-for-trait-objects).
 ///
 /// # Examples
 ///
