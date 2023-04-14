@@ -335,14 +335,14 @@ macro_rules! binary_heap {
 
 /// Version of the [`vec!`] macro where the value does not have to implement [`Clone`].
 ///
-/// When using `vec![x; count]`, the type of `x` has to implement `Clone`, because
-/// `x` is cloned `count - 1` times into all the vector elements, except the first one.
-/// This could either be undesired behavior in case `x` implements `Clone` in a way that
-/// doesn't fit your needs or `x` is not cloneable at all.
+/// Useful for unclonable types or where `Clone` is exerting undesired behaviour.
 ///
 /// # Uncloneable Types
 ///
-/// For example, this will result in a panic during compile time:
+/// When using `vec![x; count]`, the type of `x` has to implement `Clone`, because
+/// `x` is cloned `count - 1` times into all the vector elements except the first one.
+/// For example, calling `vec!` will result in a panic during compile time here,
+/// because `UnclonableWrapper` is not cloneable:
 ///
 /// ```compile_fail
 /// struct UnclonableWrapper(u8);
@@ -385,7 +385,7 @@ macro_rules! binary_heap {
 /// `vec_no_clone!` is not only useful for unclonable types, but also for types
 /// where cloning them is not what you want.
 /// The best example would be a reference counted pointer [`Rc`](std::rc::Rc).
-/// When you clone a `Rc`, a new instance referencing the same location in memory
+/// When you clone an `Rc`, a new instance referencing the same location in memory
 /// is created.
 /// If you'd rather have multiple independent reference counted pointers to
 /// different memory locations, you can use `vec_no_clone!` as well:
