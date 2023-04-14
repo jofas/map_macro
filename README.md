@@ -64,11 +64,16 @@ let hello: HashMap<&str, &dyn Debug> = hash_map_e! {
 
 Note that you need to give an explicit type to the binding when you use `map_e!`, because 
 it relies on knowing what type it should coerce the values to.
+Also, only values and not keys can be trait objects, because keys must
+implement the [`Hash`][hash] trait, which is not 
+[object safe][object safe].
 
-% TODO: here say something about object safety and that `_e` macros are available where
-% the generic parameters are not bounded 
+Where the trait bounds on generic type parameters of the collections allow trait objects, 
+macros for explicitly typed variants are provided.
+The explicitly typed versions of the macros are indicated by an `_e` suffix.
 
 [std]: https://doc.rust-lang.org/std/collections/index.html
 [trait objects]: https://doc.rust-lang.org/reference/types/trait-object.html
 [type coercion]: https://doc.rust-lang.org/reference/type-coercions.html
 [object safe]: https://doc.rust-lang.org/reference/items/traits.html#object-safety
+[hash]: https://doc.rust-lang.org/std/hash/trait.Hash.html
