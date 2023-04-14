@@ -23,12 +23,6 @@ jobs:
           cd repo
           cargo clippy --all-features --all-targets --fix
           cargo fmt
-      - name: Toc
-        run: |
-          curl https://raw.githubusercontent.com/ekalinin/github-markdown-toc/master/gh-md-toc -o gh-md-toc
-          chmod a+x gh-md-toc
-          ./gh-md-toc --insert --no-backup --hide-footer --skip-header repo/README.md
-          rm gh-md-toc
       - name: Apply cleanup
         uses: EndBug/add-and-commit@v9
         with:
