@@ -30,7 +30,6 @@ This crate has zero dependencies.
       * [Explicitly typed values for trait objects](#explicitly-typed-values-for-trait-objects)
    * [Sets](#sets)
    * [B-tree based maps and sets](#b-tree-based-maps-and-sets)
-   * [Vectors without cloning](#vectors-without-cloning)
 <!--te-->
 
 
