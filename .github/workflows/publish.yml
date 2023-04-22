@@ -22,7 +22,8 @@ jobs:
       - name: Extract Cargo.toml Version
         run: echo "VERSION=$(toml get -r Cargo.toml package.version)" >> "$GITHUB_ENV"
       - name: Check Version
-        run: [ "${{ format('v{0}', env.CARGO_VERSION) }}" == "${{ github.ref_name }}" ]
+        run: |
+          [ "${{ format('v{0}', env.CARGO_VERSION) }}" == "${{ github.ref_name }}" ]
       - name: Publish
         run: cargo publish
         env:
