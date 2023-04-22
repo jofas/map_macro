@@ -23,7 +23,7 @@ jobs:
         run: echo "CRATE_VERSION=$(toml get -r Cargo.toml package.version)" >> "$GITHUB_ENV"
       - name: Check Version
         run: |
-          [ "${{ env.CRATE_VERSION }}" == "${{ github.ref_name }}" ]
+          [ "${{ format('v{0}', env.CRATE_VERSION) }}" == "${{ github.ref_name }}" ]
       - name: Publish
         run: cargo publish
         env:
