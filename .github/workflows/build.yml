@@ -16,8 +16,6 @@ jobs:
           path: repo
       - name: Load cached dependencies
         uses: Swatinem/rust-cache@v2
-        with:
-          key: clippy
       - name: Fmt + clippy
         run: |
           cd repo
