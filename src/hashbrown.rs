@@ -7,9 +7,10 @@
 //! So you can use the macros from this module with any version of `hashbrown`
 //! to date.
 //! Though highly likely, compatibility can't be guaranteed with future versions
-//! of `hashbrown` that break SemVer compatibility.
+//! of `hashbrown` that break [SemVer compatibility](https://semver.org/#semantic-versioning-specification-semver)
+//! with `0.14`.
 //! If `hashbrown` were to remove the [`FromIterator`](::core::iter::FromIterator)
-//! implementations of `HashMap` and `HashSet` in a release that is SemVer
+//! implementations of `HashMap` and `HashSet` in a release that is
 //! incompatible with `0.14` (i.e. `0.15` or `1.0`) compatibility with the
 //! macros from this module would break for that new version.
 //!
