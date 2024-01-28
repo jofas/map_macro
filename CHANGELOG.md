@@ -14,6 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * `hashbrown::hash_set` macro
 
+### Removed
+
+* `map` macro
+
+* `map_e` macro
+
+* `set` macro
+
 
 ## [0.2.6]
 
@@ -63,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* enhanced performance of `vec_no_clone` macro when used with a
+* Enhanced performance of `vec_no_clone` macro when used with a
   list of elements
 
 
@@ -71,7 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* better allocation performace for all collections
+* Better allocation performace for all collections
 
 
 ## [0.2.2]
