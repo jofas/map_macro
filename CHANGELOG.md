@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * `hashbrown::hash_set` macro
 
+### Changed
+
+* Explicitly typed map macros: keys also cast now (before only values were 
+  casted)
+
 ### Removed
 
 * `map` macro

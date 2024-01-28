@@ -46,7 +46,7 @@ macro_rules! hash_map {
 #[macro_export]
 macro_rules! hash_map_e {
     {$($k: expr => $v: expr),* $(,)?} => {
-        ::std::collections::HashMap::from([$(($k, $v as _),)*])
+        ::std::collections::HashMap::from([$(($k as _, $v as _),)*])
     };
 }
 
@@ -96,7 +96,7 @@ macro_rules! btree_map {
 #[macro_export]
 macro_rules! btree_map_e {
     {$($k: expr => $v: expr),* $(,)?} => {
-        ::std::collections::BTreeMap::from([$(($k, $v as _),)*])
+        ::std::collections::BTreeMap::from([$(($k as _, $v as _),)*])
     };
 }
 

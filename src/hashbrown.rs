@@ -71,7 +71,7 @@ macro_rules! __hb_hash_map {
 #[macro_export]
 macro_rules! __hb_hash_map_e {
     {$($k: expr => $v: expr),* $(,)?} => {
-        <::hashbrown::HashMap::<_, _> as ::core::iter::FromIterator<_>>::from_iter([$(($k, $v as _),)*])
+        <::hashbrown::HashMap::<_, _> as ::core::iter::FromIterator<_>>::from_iter([$(($k as _, $v as _),)*])
     };
 }
 
