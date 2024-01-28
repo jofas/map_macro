@@ -7,9 +7,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 This crate offers declarative macros for initializing collections from the 
-[standard library][std].
+[standard library][std] and [hashbrown][hashbrown].
 
-This crate has zero dependencies.
+This crate has zero dependencies and is `#![no_std]` if you opt-out of
+support for the standard library collections.
 
 ## Example
 
@@ -77,3 +78,4 @@ The explicitly typed versions of the macros are indicated by an `_e` suffix.
 [type coercion]: https://doc.rust-lang.org/reference/type-coercions.html
 [object safe]: https://doc.rust-lang.org/reference/items/traits.html#object-safety
 [hash]: https://doc.rust-lang.org/std/hash/trait.Hash.html
+[hashbrown]: https://docs.rs/hashbrown/latest/hashbrown/

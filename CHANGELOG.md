@@ -4,6 +4,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html>).
 
 
+## [0.3.0]
+
+### Added
+
+* `hashbrown::hash_map` macro
+
+* `hashbrown::hash_map_e` macro
+
+* `hashbrown::hash_set` macro
+
+
 ## [0.2.6]
 
 ### Added
@@ -27,6 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 * `map` macro
+
+* `map_e` macro
 
 * `set` macro
 

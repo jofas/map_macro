@@ -12,14 +12,33 @@ repository = "https://github.com/jofas/map_macro"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+default = ["std"]
+std = []
+hashbrown = []
+# feature that allows the docs to link to the hashbrown documentation
+__docs = ["dep:hashbrown"]
+
 [dependencies]
+hashbrown = { version = "0.14", optional = true }
 
 [dev-dependencies]
+hashbrown = "0.14"
 criterion = { version = "^0.3.6", features = ["html_reports"] }
 
 [lib]
 bench = false
 
+[[test]]
+name = "hashbrown"
+path = "tests/hashbrown.rs"
+test = true
+required-features = ["hashbrown"]
+
 [[bench]]
 name = "benches"
 harness = false
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
