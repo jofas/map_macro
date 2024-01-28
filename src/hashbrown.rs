@@ -17,7 +17,7 @@
 //! **Note:** to be compatible with all versions of `hashbrown` at once, this
 //! crate doesn't re-export `hashbrown`, which means that if you rename
 //! `hashbrown` in your dependencies, the macros from this module won't be able
-//! to import the types resulting in a compile-time error.
+//! to import the needed types resulting in a compile-time error.
 //!
 
 /// Macro for creating a [`HashMap`](::hashbrown::HashMap).
