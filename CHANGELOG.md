@@ -14,6 +14,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * `hashbrown::hash_set` macro
 
+* `hashbrown::hash_set_e` macro
+
+* `binary_heap_e` macro
+
+* `btree_set_e` macro
+
+* `hash_set_e` macro
+
+* `vec_no_clone_e` macro
+
 ### Changed
 
 * Explicitly typed map macros: keys also cast now (before only values were 

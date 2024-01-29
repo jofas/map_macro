@@ -22,6 +22,8 @@ let hello = hash_map! {
     "de" => "Hallo",
     "fr" => "Bonjour",
     "es" => "Hola",
+    "cat" => "Hola",
+    "🌍" => "👋",
 };
 ```
 
