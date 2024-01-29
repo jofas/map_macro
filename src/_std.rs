@@ -12,6 +12,7 @@
 ///     "de" => "Auf Wiedersehen",
 ///     "fr" => "Au revoir",
 ///     "es" => "Adios",
+///     "cat" => "Adéu",
 /// };
 /// ```
 ///
@@ -22,8 +23,9 @@ macro_rules! hash_map {
     };
 }
 
-/// Explicitly typed equivalent of [`hash_map!`], suitable for
-/// [trait object values](crate#explicitly-typed-values-for-trait-objects).
+/// Explicitly typed equivalent of [`hash_map!`].
+///
+/// See the [explicity typed macros](crate#explicitly-typed-macros) section.
 ///
 /// # Examples
 ///
@@ -38,6 +40,7 @@ macro_rules! hash_map {
 ///     "de" => &"Auf Wiedersehen",
 ///     "fr" => &"Au revoir",
 ///     "es" => &"Adios",
+///     "cat" => &"Adéu",
 /// };
 ///
 /// println!("{:?}", goodbye);
@@ -64,6 +67,7 @@ macro_rules! hash_map_e {
 ///     "de" => "Auf Wiedersehen",
 ///     "fr" => "Au revoir",
 ///     "es" => "Adios",
+///     "cat" => "Adéu",
 /// };
 /// ```
 ///
@@ -74,8 +78,9 @@ macro_rules! btree_map {
     };
 }
 
-/// Explicitly typed equivalent of [`btree_map!`], suitable for
-/// [trait object values](crate#explicitly-typed-values-for-trait-objects).
+/// Explicitly typed equivalent of [`btree_map!`].
+///
+/// See the [explicity typed macros](crate#explicitly-typed-macros) section.
 ///
 /// # Examples
 ///
@@ -90,6 +95,7 @@ macro_rules! btree_map {
 ///     "de" => &"Auf Wiedersehen",
 ///     "fr" => &"Au revoir",
 ///     "es" => &"Adios",
+///     "cat" => &"Adéu",
 /// };
 /// ```
 ///
@@ -121,6 +127,31 @@ macro_rules! hash_set {
     };
 }
 
+/// Explicitly typed equivalent of [`hash_set!`].
+///
+/// See the [explicity typed macros](crate#explicitly-typed-macros) section.
+///
+/// # Examples
+///
+/// ```rust
+/// use std::collections::HashSet;
+///
+/// use map_macro::hash_set_e;
+///
+/// enum Foo { A, B, C, D }
+///
+/// let x: HashSet<u8> = hash_set_e! { Foo::A, Foo::B, Foo::C, Foo::C, Foo::D };
+///
+/// assert_eq!(x.len(), 4);
+/// ```
+///
+#[macro_export]
+macro_rules! hash_set_e {
+    {$($v: expr),* $(,)?} => {
+        ::std::collections::HashSet::from([$($v as _,)*])
+    };
+}
+
 /// Macro for creating a [`BTreeSet`](::std::collections::BTreeSet).
 ///
 /// Syntactic sugar for [`BTreeSet::from`](::std::collections::BTreeSet::from).
@@ -139,6 +170,31 @@ macro_rules! hash_set {
 macro_rules! btree_set {
     {$($v: expr),* $(,)?} => {
         ::std::collections::BTreeSet::from([$($v,)*])
+    };
+}
+
+/// Explicitly typed equivalent of [`btree_set!`].
+///
+/// See the [explicity typed macros](crate#explicitly-typed-macros) section.
+///
+/// # Examples
+///
+/// ```rust
+/// use std::collections::BTreeSet;
+///
+/// use map_macro::btree_set_e;
+///
+/// enum Foo { A, B, C, D }
+///
+/// let x: BTreeSet<u8> = btree_set_e! { Foo::A, Foo::B, Foo::C, Foo::C, Foo::D };
+///
+/// assert_eq!(x.len(), 4);
+/// ```
+///
+#[macro_export]
+macro_rules! btree_set_e {
+    {$($v: expr),* $(,)?} => {
+        ::std::collections::BTreeSet::from([$($v as _,)*])
     };
 }
 
@@ -173,8 +229,9 @@ macro_rules! vec_deque {
     };
 }
 
-/// Explicitly typed equivalent of [`vec_deque!`], suitable for
-/// [trait object values](crate#explicitly-typed-values-for-trait-objects).
+/// Explicitly typed equivalent of [`vec_deque!`].
+///
+/// See the [explicity typed macros](crate#explicitly-typed-macros) section.
 ///
 /// # Examples
 ///
@@ -237,8 +294,9 @@ macro_rules! linked_list {
     };
 }
 
-/// Explicitly typed equivalent of [`linked_list!`], suitable for
-/// [trait object values](crate#explicitly-typed-values-for-trait-objects).
+/// Explicitly typed equivalent of [`linked_list!`].
+///
+/// See the [explicity typed macros](crate#explicitly-typed-macros) section.
 ///
 /// # Examples
 ///
@@ -298,6 +356,41 @@ macro_rules! binary_heap {
     };
     {$($v: expr),* $(,)?} => {
         ::std::collections::BinaryHeap::from([$($v,)*])
+    };
+}
+
+/// Explicitly typed equivalent of [`binary_heap!`].
+///
+/// See the [explicity typed macros](crate#explicitly-typed-macros) section.
+///
+/// # Examples
+///
+/// ```
+/// use std::collections::BinaryHeap;
+///
+/// use map_macro::binary_heap_e;
+///
+/// enum Foo { A, B, C, D }
+///
+/// let v: BinaryHeap<u8> = binary_heap_e![Foo::A, Foo::B, Foo::C, Foo::D];
+/// let v: BinaryHeap<u8> = binary_heap_e![Foo::A; 4];
+/// ```
+///
+#[macro_export]
+macro_rules! binary_heap_e {
+    {$v: expr; $c: expr} => {
+        {
+            let mut bh = ::std::collections::BinaryHeap::with_capacity($c);
+
+            for _ in 0..$c {
+                bh.push($v as _);
+            }
+
+            bh
+        }
+    };
+    {$($v: expr),* $(,)?} => {
+        ::std::collections::BinaryHeap::from([$($v as _,)*])
     };
 }
 
@@ -439,6 +532,7 @@ macro_rules! binary_heap {
 #[macro_export]
 macro_rules! vec_no_clone {
     {$v: expr; $c: expr} => {
+
         {
             let mut vec = Vec::with_capacity($c);
 
@@ -452,6 +546,41 @@ macro_rules! vec_no_clone {
     {$($v: expr),* $(,)?} => {
         {
             vec![$($v),*]
+        }
+    };
+}
+
+/// Explicitly typed equivalent of [`vec_no_clone!`].
+///
+/// See the [explicity typed macros](crate#explicitly-typed-macros) section.
+///
+/// # Examples
+///
+/// ```
+/// use std::fmt::Display;
+///
+/// use map_macro::vec_no_clone_e;
+///
+/// let v: Vec<&dyn Display> = vec_no_clone_e![&0; 4];
+/// ```
+///
+#[macro_export]
+macro_rules! vec_no_clone_e {
+    {$v: expr; $c: expr} => {
+
+        {
+            let mut vec = Vec::with_capacity($c);
+
+            for _ in 0..$c {
+                vec.push($v as _);
+            }
+
+            vec
+        }
+    };
+    {$($v: expr),* $(,)?} => {
+        {
+            vec![$($v as _),*]
         }
     };
 }

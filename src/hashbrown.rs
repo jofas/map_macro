@@ -1,6 +1,21 @@
 //! Macros for initializing [`hashbrown`] maps and sets.
 //!
-//! # Supported versions of `hashbrown`
+//! # Example
+//!
+//! ```
+//! use map_macro::hashbrown::hash_map;
+//!
+//! let hello = hash_map! {
+//!     "en" => "Hello",
+//!     "de" => "Hallo",
+//!     "fr" => "Bonjour",
+//!     "es" => "Hola",
+//!     "cat" => "Hola",
+//!     "🌍" => "👋",
+//! };
+//! ```
+//!
+//! # Supported Versions of `hashbrown`
 //!
 //! As of writing this, up to the current `hashbrown` version `0.14` **all**
 //! versions of `hashbrown` are supported.
@@ -15,9 +30,10 @@
 //! macros from this module would break for that new version.
 //!
 //! **Note:** to be compatible with all versions of `hashbrown` at once, this
-//! crate doesn't re-export `hashbrown`, which means that if you rename
-//! `hashbrown` in your dependencies, the macros from this module won't be able
-//! to import the needed types resulting in a compile-time error.
+//! crate doesn't re-export `hashbrown`.
+//! That means that (I) you need to specify it as a dependency yourself and
+//! (II) you can't rename it or the macros from this module won't be able to
+//! import the needed types, resulting in a compile-time error.
 //!
 
 /// Macro for creating a [`HashMap`](::hashbrown::HashMap).
@@ -34,6 +50,7 @@
 ///     "de" => "Auf Wiedersehen",
 ///     "fr" => "Au revoir",
 ///     "es" => "Adios",
+///     "cat" => "Adéu",
 /// };
 /// ```
 ///
@@ -45,8 +62,9 @@ macro_rules! __hb_hash_map {
     };
 }
 
-/// Explicitly typed equivalent of [`hash_map!`](self::hash_map), suitable for
-/// [trait object values](crate#explicitly-typed-values-for-trait-objects).
+/// Explicitly typed equivalent of [`hash_map!`](self::hash_map).
+///
+/// See the [explicity typed macros](crate#explicitly-typed-macros) section.
 ///
 /// # Examples
 ///
@@ -62,6 +80,7 @@ macro_rules! __hb_hash_map {
 ///     "de" => &"Auf Wiedersehen",
 ///     "fr" => &"Au revoir",
 ///     "es" => &"Adios",
+///     "cat" => &"Adéu",
 /// };
 ///
 /// println!("{:?}", goodbye);
@@ -97,6 +116,32 @@ macro_rules! __hb_hash_set {
     };
 }
 
+/// Explicitly typed equivalent of [`hash_set!`](self::hash_set).
+///
+/// See the [explicity typed macros](crate#explicitly-typed-macros) section.
+///
+/// # Examples
+///
+/// ```rust
+/// use hashbrown::HashSet;
+///
+/// use map_macro::hashbrown::hash_set_e;
+///
+/// enum Foo { A, B, C, D }
+///
+/// let x: HashSet<u8> = hash_set_e! { Foo::A, Foo::B, Foo::C, Foo::C, Foo::D };
+///
+/// assert_eq!(x.len(), 4);
+/// ```
+///
+#[doc(hidden)]
+#[macro_export]
+macro_rules! __hb_hash_set_e {
+    {$($v: expr),* $(,)?} => {
+        <::hashbrown::HashSet::<_> as ::core::iter::FromIterator<_>>::from_iter([$($v as _,)*])
+    };
+}
+
 #[doc(inline)]
 pub use __hb_hash_map as hash_map;
 
@@ -105,3 +150,6 @@ pub use __hb_hash_map_e as hash_map_e;
 
 #[doc(inline)]
 pub use __hb_hash_set as hash_set;
+
+#[doc(inline)]
+pub use __hb_hash_set_e as hash_set_e;
